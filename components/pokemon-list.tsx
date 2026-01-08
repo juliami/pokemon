@@ -1,7 +1,9 @@
-import { getPokemons } from "@/api/fetch";
-import { Pokemon } from "@/types";
 import { useEffect, useState } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
+
+import { getPokemons } from "@/api/fetch";
+import { Pokemon } from "@/types";
+
 import PokemonListItem from "./pokemon-list-item";
 import { ThemedText } from "./themed-text";
 

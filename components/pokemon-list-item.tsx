@@ -1,5 +1,7 @@
 import { Pokemon } from "@/types";
+import { Link } from 'expo-router';
 import { StyleSheet, View } from "react-native";
+
 import { ThemedText } from "./themed-text";
 
 interface PokemonListItemProps extends Pokemon {
@@ -8,11 +10,16 @@ interface PokemonListItemProps extends Pokemon {
 
 const PokemonListItem = ({ name, id, index }: PokemonListItemProps) => {
   return (
+    <Link href={`/modal/[${id}]`}>
     <View style={styles.listItem}>
+        
+      
       <ThemedText type="default">{index}</ThemedText>
       <ThemedText>{name}</ThemedText>
       <ThemedText style={styles.id}>#{id}</ThemedText>
+      
     </View>
+    </Link>
   );
 };
 
