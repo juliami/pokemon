@@ -1,11 +1,22 @@
 import { Link, useLocalSearchParams } from 'expo-router';
 import { StyleSheet } from 'react-native';
 
+import { getPokemonById } from '@/api/fetch';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
+import { useEffect } from 'react';
 
 export default function ModalScreen() {
      const { id } = useLocalSearchParams();
+       useEffect(() => {
+         // todo: move logic to the separate hook, handle loading and error states
+         const fetchData = async () => {
+           const data = await getPokemonById(Number(id));
+         };
+         fetchData();
+       }, []);
+     
+    
 
   return (
     <ThemedView style={styles.container}>
