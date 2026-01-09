@@ -2,11 +2,7 @@ import { Pokemon } from "@/types";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "./themed-text";
 
-interface PokemonListItemProps extends Pokemon {
-  index: number;
-}
-
-const PokemonListItem = ({ name, id, index }: PokemonListItemProps) => {
+const PokemonListItem = ({ name, id, index }: Pokemon & { index: number }) => {
   return (
     <View style={styles.listItem}>
       <ThemedText type="default">{index}</ThemedText>
