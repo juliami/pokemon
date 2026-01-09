@@ -15,3 +15,20 @@ export async function getPokemons(): Promise<Pokemon[]> {
 
   return data.pokemon_v2_pokemonspecies;
 }
+
+
+export async function getPokemonById(id: number): Promise<Pokemon> {
+
+const query = gql`
+  query {
+    pokemon_v2_pokemonspecies(
+        where: {pokemon_v2_generation: {id: {_eq: ${id}}}}
+ 
+  }
+`;
+
+
+  const data = await graphQLClient.request<any>(query);
+    console.log(data);
+  return data.pokemon_v2_pokemonspecies;
+}
