@@ -34,7 +34,7 @@ const PokemonList = () => {
         renderItem={({ item, index }) => (
           <PokemonListItem name={item.name} id={item.id} index={index} />
         )}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.id.toString()}
         style={styles.list}
       />
     </>
