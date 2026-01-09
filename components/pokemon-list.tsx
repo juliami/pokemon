@@ -1,45 +1,54 @@
 import { useGetPokemonsQuery } from "@/hooks/use-get-pokemons-query";
-import { useCallback } from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
+import { useCallback, useState } from "react";
+import { FlatList, StyleSheet } from "react-native";
 import PokemonListItem from "./pokemon-list-item";
 import { ThemedText } from "./themed-text";
+import { WebButton } from "./web-button";
 
 const PokemonList = () => {
-  const { data, loading, error, fetchMore } = useGetPokemonsQuery();
-  
+  const [refreshing, setRefreshing] = useState(false);
+  const { data, error, fetchMore, refetch } = useGetPokemonsQuery();
+
+  const fetchNextPage = useCallback(() => {
+    if (!data?.pokemon_v2_pokemonspecies) return;
+    fetchMore({
+      variables: {
+        offset: data?.pokemon_v2_pokemonspecies.length
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          ...prev,
+          pokemon_v2_pokemonspecies: [
+            ...prev.pokemon_v2_pokemonspecies,
+            ...fetchMoreResult.pokemon_v2_pokemonspecies
+          ]
+        };
+      }
+    });
+  }, [fetchMore, data]);
+
+
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    refetch();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  }, [refetch]);
+
+
   const pokemons = data?.pokemon_v2_pokemonspecies;
-
-  if (!pokemons?.length && loading) return <ThemedText>Loading...</ThemedText>;
+  
   if (error) return <ThemedText>Error: {error.message}</ThemedText>;
-
   if (!pokemons) return <ThemedText>No pokemons found</ThemedText>;
-  
-  const fetchNextPage = useCallback(() =>{
-     fetchMore({
-          variables: {
-            offset: pokemons.length
-          },
-          updateQuery: (prev, { fetchMoreResult }) => {
-            if (!fetchMoreResult) return prev;
-            return {
-              ...prev,
-              pokemon_v2_pokemonspecies: [
-                ...prev.pokemon_v2_pokemonspecies,
-                ...fetchMoreResult.pokemon_v2_pokemonspecies
-              ]
-            };
-          }
-        });
-  }, [fetchMore, pokemons]);
-  
+
+
+
   return (
     <>
-      <ThemedText type="defaultSemiBold" style={styles.header}>
-        <Text>No.</Text>
-        <Text>Name</Text>
-        <Text style={styles.id}>Id</Text>
-      </ThemedText>
-
+      <WebButton onClick={onRefresh} text="Refresh Pokemons" />
       <FlatList
         data={pokemons}
         renderItem={({ item, index }) => (
@@ -47,25 +56,24 @@ const PokemonList = () => {
         )}
         keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
         onEndReached={fetchNextPage}
-        style={styles.list}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        contentContainerStyle={[styles.list, refreshing && { opacity: 0.3 }]}
       />
-
     </>
   );
 };
 
 const styles = StyleSheet.create({
   list: {
-    display: "flex",
+    padding: 32,
   },
-  header: {
-    display: "flex",
-    padding: 8,
-    flexDirection: "row",
-    gap: 4,
+  container: {
+    flex: 1,
   },
-  id: {
-    marginLeft: "auto",
+  scrollView: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });
 

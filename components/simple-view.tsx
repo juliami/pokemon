@@ -7,7 +7,6 @@ export function SimpleView({ ...props }: ViewProps) {
 const styles = StyleSheet.create({
   simpleView: {
     flex: 1,
-    padding: 32,
     gap: 16,
     overflow: "hidden",
   },
