@@ -17,7 +17,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen
-        name="favorite"
+        name="index"
         options={{
           title: "Your Fav Pokemon",
           tabBarIcon: ({ color }) => (
