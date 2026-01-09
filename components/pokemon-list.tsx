@@ -1,15 +1,37 @@
 import { useGetPokemonsQuery } from "@/hooks/use-get-pokemons-query";
+import { useCallback } from "react";
 import { FlatList, StyleSheet, Text } from "react-native";
 import PokemonListItem from "./pokemon-list-item";
 import { ThemedText } from "./themed-text";
 
 const PokemonList = () => {
-  const { loading, error, data } = useGetPokemonsQuery();
+  const { data, loading, error, fetchMore } = useGetPokemonsQuery();
+  
+  const pokemons = data?.pokemon_v2_pokemonspecies;
 
   if (loading) return <ThemedText>Loading...</ThemedText>;
   if (error) return <ThemedText>Error: {error.message}</ThemedText>;
 
-  const pokemons = data?.pokemon_v2_pokemonspecies;
+  if (!pokemons) return <ThemedText>No pokemons found</ThemedText>;
+
+
+  const fetchMorePokemons = useCallback(() =>{
+     fetchMore({
+          variables: {
+            offset: pokemons.length
+          },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            if (!fetchMoreResult) return prev;
+            return {
+              ...prev,
+              pokemon_v2_pokemonspecies: [
+                ...prev.pokemon_v2_pokemonspecies,
+                ...fetchMoreResult.pokemon_v2_pokemonspecies
+              ]
+            };
+          }
+        });
+  }, [fetchMore, pokemons]);
 
   return (
     <>
@@ -27,6 +49,8 @@ const PokemonList = () => {
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
       />
+
+       <button onClick={fetchMorePokemons}>Load More</button>
     </>
   );
 };
