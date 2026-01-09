@@ -9,13 +9,12 @@ const PokemonList = () => {
   
   const pokemons = data?.pokemon_v2_pokemonspecies;
 
-  if (loading) return <ThemedText>Loading...</ThemedText>;
+  if (!pokemons?.length && loading) return <ThemedText>Loading...</ThemedText>;
   if (error) return <ThemedText>Error: {error.message}</ThemedText>;
 
   if (!pokemons) return <ThemedText>No pokemons found</ThemedText>;
-
-
-  const fetchMorePokemons = useCallback(() =>{
+  
+  const fetchNextPage = useCallback(() =>{
      fetchMore({
           variables: {
             offset: pokemons.length
@@ -32,7 +31,7 @@ const PokemonList = () => {
           }
         });
   }, [fetchMore, pokemons]);
-
+  
   return (
     <>
       <ThemedText type="defaultSemiBold" style={styles.header}>
@@ -46,11 +45,11 @@ const PokemonList = () => {
         renderItem={({ item, index }) => (
           <PokemonListItem name={item.name} id={item.id} index={index} />
         )}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
+        onEndReached={fetchNextPage}
         style={styles.list}
       />
 
-       <button onClick={fetchMorePokemons}>Load More</button>
     </>
   );
 };
