@@ -1,27 +1,17 @@
-import { useEffect, useState } from "react";
+import { useGetPokemonsQuery } from "@/hooks/use-get-pokemons-query";
 import { FlatList, StyleSheet, Text } from "react-native";
 
-import { getPokemons } from "@/api/fetch";
-import { Pokemon } from "@/types";
 
 import PokemonListItem from "./pokemon-list-item";
 import { ThemedText } from "./themed-text";
 
 const PokemonList = () => {
-  const [pokemons, setPokemons] = useState<Pokemon[] | undefined>(undefined);
+  const { loading, error, data } = useGetPokemonsQuery();
 
-  useEffect(() => {
-    // todo: move logic to the separate hook, handle loading and error states
-    const fetchData = async () => {
-      const data = await getPokemons();
-      setPokemons(data);
-    };
-    fetchData();
-  }, []);
+  if (loading) return <ThemedText>Loading...</ThemedText>;
+  if (error) return <ThemedText>Error: {error.message}</ThemedText>;
 
-  if (!pokemons) {
-    return <ThemedText type="defaultSemiBold">Loading...</ThemedText>;
-  }
+  const pokemons = data?.pokemon_v2_pokemonspecies;
 
   return (
     <>
@@ -36,7 +26,7 @@ const PokemonList = () => {
         renderItem={({ item, index }) => (
           <PokemonListItem name={item.name} id={item.id} index={index} />
         )}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item) => item.id.toString()}
         style={styles.list}
       />
     </>

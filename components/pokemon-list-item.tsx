@@ -4,11 +4,7 @@ import { StyleSheet, View } from "react-native";
 
 import { ThemedText } from "./themed-text";
 
-interface PokemonListItemProps extends Pokemon {
-  index: number;
-}
-
-const PokemonListItem = ({ name, id, index }: PokemonListItemProps) => {
+const PokemonListItem = ({ name, id, index }: Pokemon & { index: number }) => {
   return (
     <Link href={`/modal/[${id}]`}>
     <View style={styles.listItem}>
