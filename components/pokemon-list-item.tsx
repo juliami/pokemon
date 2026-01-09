@@ -6,14 +6,11 @@ import { ThemedText } from "./themed-text";
 
 const PokemonListItem = ({ name, id, index }: Pokemon & { index: number }) => {
   return (
-    <Link href={`/modal/[${id}]`}>
-    <View style={styles.listItem}>
-        
-      
+    <Link href={`/pokemon/${id}`}>
+    <View style={styles.listItem}>      
       <ThemedText type="default">{index}</ThemedText>
       <ThemedText>{name}</ThemedText>
       <ThemedText style={styles.id}>#{id}</ThemedText>
-      
     </View>
     </Link>
   );
