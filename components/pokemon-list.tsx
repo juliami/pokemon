@@ -35,12 +35,12 @@ const PokemonList = () => {
     refetch();
     setTimeout(() => {
       setRefreshing(false);
-    }, 2000);
+    }, 1000);
   }, [refetch]);
 
 
   const pokemons = data?.pokemon_v2_pokemonspecies;
-  
+
   if (error) return <ThemedText>Error: {error.message}</ThemedText>;
   if (!pokemons) return <ThemedText>No pokemons found</ThemedText>;
 
