@@ -1,4 +1,4 @@
-import { PokemonColors } from "@/constants/theme";
+import { PokemonColorKey } from "@/constants/theme";
 import { GetPokemonByIdQuery } from "@/types/gql/graphql";
 import { DetailedPokemonSpecies } from "@/types/pokemon";
 
@@ -15,13 +15,14 @@ export const normalizePokemonResponse = (response: GetPokemonByIdQuery): Detaile
 
   return {
     name: species.name,
-    color: PokemonColors[(species?.pokemon_v2_pokemoncolor?.name || 'white') as keyof typeof PokemonColors],
+    color: (species?.pokemon_v2_pokemoncolor?.name || 'white') as PokemonColorKey,
     id: species.id,
     weight: pokemon.weight ?? 0,
     height: pokemon.height ?? 0,
     imageUri: pokemon.pokemon_v2_pokemonsprites[0].sprites.other['official-artwork'].front_default,
     types: pokemon.pokemon_v2_pokemontypes.map((typeEntry: any) => typeEntry.pokemon_v2_type.name),
     abilities: pokemon.pokemon_v2_pokemonabilities.map((abilityEntry: any) => abilityEntry.pokemon_v2_ability.name),
-    genus: species.pokemon_v2_pokemonspeciesnames[0].genus
+    genus: species.pokemon_v2_pokemonspeciesnames[0].genus,
+    flavorText: species.pokemon_v2_pokemonspeciesflavortexts[0]?.flavor_text || '',
   };
 };
