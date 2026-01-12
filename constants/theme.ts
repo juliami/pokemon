@@ -8,6 +8,19 @@ import { Platform } from "react-native";
 const tintColorLight = "#0a7ea4";
 const tintColorDark = "#fff";
 
+export const PokemonColors = {
+    black: "#3e3e40",
+    blue: "#7daed6",
+    brown: "#aa8a7b",
+    gray: "#b0b0b3",
+    green: "#8db594",
+    pink: "#f7b5c4",
+    purple: "#b48dbf",
+    red: "#fc6c6e",
+    white: "#f0f0f0",
+    yellow: "#f0e3a7"
+}
+
 export const Colors = {
   light: {
     text: "#11181C",

@@ -1,3 +1,15 @@
 import { GetAllPokemonSpeciesQuery } from './gql/graphql';
 
-export type Pokemon = GetAllPokemonSpeciesQuery['pokemon_v2_pokemonspecies'][number];
+export type BasicPokemonSpecies = GetAllPokemonSpeciesQuery['pokemon_v2_pokemonspecies'][number];
+
+export type DetailedPokemonSpecies = {
+    name: string;
+    color: string;
+    id: number;
+    weight: number;
+    height: number;
+    imageUri: string;
+    types: string[];
+    abilities: string[];
+    genus: string;
+}
