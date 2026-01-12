@@ -2,11 +2,15 @@ import { PokemonColorKey } from "@/constants/theme";
 import { GetPokemonByIdQuery } from "@/types/gql/graphql";
 import { DetailedPokemonSpecies } from "@/types/pokemon";
 
-
-
-export const normalizePokemonResponse = (response: GetPokemonByIdQuery): DetailedPokemonSpecies | null => {
+export const normalizePokemonResponse = (
+  response: GetPokemonByIdQuery,
+): DetailedPokemonSpecies | null => {
   // Assuming the data structure as the root is pokemon_v2_pokemonspecies and it contains array items
-  if (!response || !response.pokemon_v2_pokemonspecies || response.pokemon_v2_pokemonspecies.length === 0) {
+  if (
+    !response ||
+    !response.pokemon_v2_pokemonspecies ||
+    response.pokemon_v2_pokemonspecies.length === 0
+  ) {
     return null;
   }
 
@@ -15,14 +19,22 @@ export const normalizePokemonResponse = (response: GetPokemonByIdQuery): Detaile
 
   return {
     name: species.name,
-    color: (species?.pokemon_v2_pokemoncolor?.name || 'white') as PokemonColorKey,
+    color: (species?.pokemon_v2_pokemoncolor?.name ||
+      "white") as PokemonColorKey,
     id: species.id,
     weight: pokemon.weight ?? 0,
     height: pokemon.height ?? 0,
-    imageUri: pokemon.pokemon_v2_pokemonsprites[0].sprites.other['official-artwork'].front_default,
-    types: pokemon.pokemon_v2_pokemontypes.map((typeEntry: any) => typeEntry.pokemon_v2_type.name),
-    abilities: pokemon.pokemon_v2_pokemonabilities.map((abilityEntry: any) => abilityEntry.pokemon_v2_ability.name),
+    imageUri:
+      pokemon.pokemon_v2_pokemonsprites[0].sprites.other["official-artwork"]
+        .front_default,
+    types: pokemon.pokemon_v2_pokemontypes.map(
+      (typeEntry: any) => typeEntry.pokemon_v2_type.name,
+    ),
+    abilities: pokemon.pokemon_v2_pokemonabilities.map(
+      (abilityEntry: any) => abilityEntry.pokemon_v2_ability.name,
+    ),
     genus: species.pokemon_v2_pokemonspeciesnames[0].genus,
-    flavorText: species.pokemon_v2_pokemonspeciesflavortexts[0]?.flavor_text || '',
+    flavorText:
+      species.pokemon_v2_pokemonspeciesflavortexts[0]?.flavor_text || "",
   };
 };

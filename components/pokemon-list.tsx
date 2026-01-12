@@ -13,7 +13,7 @@ const PokemonList = () => {
     if (!data?.pokemon_v2_pokemonspecies) return;
     fetchMore({
       variables: {
-        offset: data?.pokemon_v2_pokemonspecies.length
+        offset: data?.pokemon_v2_pokemonspecies.length,
       },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prev;
@@ -21,14 +21,12 @@ const PokemonList = () => {
           ...prev,
           pokemon_v2_pokemonspecies: [
             ...prev.pokemon_v2_pokemonspecies,
-            ...fetchMoreResult.pokemon_v2_pokemonspecies
-          ]
+            ...fetchMoreResult.pokemon_v2_pokemonspecies,
+          ],
         };
-      }
+      },
     });
   }, [fetchMore, data]);
-
-
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -38,13 +36,10 @@ const PokemonList = () => {
     }, 1000);
   }, [refetch]);
 
-
   const pokemons = data?.pokemon_v2_pokemonspecies;
 
   if (error) return <ThemedText>Error: {error.message}</ThemedText>;
   if (!pokemons) return <ThemedText>No pokemons found</ThemedText>;
-
-
 
   return (
     <>
@@ -73,7 +68,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
 });
 

@@ -1,17 +1,21 @@
 import { BasicPokemonSpecies } from "@/types";
-import { Link } from 'expo-router';
+import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 import { ThemedText } from "./themed-text";
 
-const PokemonListItem = ({ name, id, index }: BasicPokemonSpecies & { index: number }) => {
+const PokemonListItem = ({
+  name,
+  id,
+  index,
+}: BasicPokemonSpecies & { index: number }) => {
   return (
     <Link href={`/pokemon/${id}`}>
-    <View style={styles.listItem}>      
-      <ThemedText type="default">{index}</ThemedText>
-      <ThemedText>{name}</ThemedText>
-      <ThemedText style={styles.id}>#{id}</ThemedText>
-    </View>
+      <View style={styles.listItem}>
+        <ThemedText type="default">{index}</ThemedText>
+        <ThemedText>{name}</ThemedText>
+        <ThemedText style={styles.id}>#{id}</ThemedText>
+      </View>
     </Link>
   );
 };

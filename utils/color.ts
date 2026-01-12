@@ -3,4 +3,4 @@ export const hexToRGBA = (hex: string, alpha: number = 1): string => {
   const g = parseInt(hex.slice(3, 5), 16);
   const b = parseInt(hex.slice(5, 7), 16);
   return `rgba(${r},${g},${b},${alpha})`;
-}
+};
