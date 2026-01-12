@@ -7,25 +7,23 @@ import { ThemedView } from '@/components/themed-view';
 import { useGetPokemonByIdQuery } from '@/hooks/use-get-pokemon-by-id';
 
 export default function ModalScreen() {
-    const { id } = useLocalSearchParams();
-    const { data, loading } = useGetPokemonByIdQuery(Number(id));
+  const { id } = useLocalSearchParams();
+  const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
 
-
-  const pokemon = data?.pokemon_v2_pokemonspecies[0];
-  console.log(pokemon?.pokemon_v2_pokemons[0].pokemon_v2_pokemonsprites[0].sprites.other['official-artwork'].front_default);
-
+  if (!pokemon) {
+    return null
+  }
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={[styles.container, { backgroundColor: pokemon?.color }]}>
       {loading ? (
         <ThemedText>Loading...</ThemedText>
       ) : <>
         <PokemonDetails pokemon={pokemon} />
-        <ThemedText type="title">{pokemon?.name}</ThemedText>
       </>}
 
 
-   
+
 
       <Link href="/list" dismissTo style={styles.link}>
         <ThemedText type="link">Close</ThemedText>
