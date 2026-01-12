@@ -8,17 +8,27 @@ import { Platform } from "react-native";
 const tintColorLight = "#0a7ea4";
 const tintColorDark = "#fff";
 
-export const PokemonColors = {
-    black: "#3e3e40",
-    blue: "#7daed6",
-    brown: "#aa8a7b",
-    gray: "#b0b0b3",
-    green: "#8db594",
-    pink: "#f7b5c4",
-    purple: "#b48dbf",
-    red: "#fc6c6e",
-    white: "#f0f0f0",
-    yellow: "#f0e3a7"
+interface ColorSet {
+    default: string;
+    darker: string;
+}
+export type PokemonColorKey = 'black' | 'blue' | 'brown' | 'gray' | 'green' | 'pink' | 'purple' | 'red' | 'white' | 'yellow';
+
+type PokemonColorsType = {
+    [key in PokemonColorKey]: ColorSet;
+};
+
+export const PokemonColors: PokemonColorsType = {
+    black: { default: "#3e3e40", darker: "#2a2a2c" },
+    blue: { default: "#7daed6", darker: "#488bc3" },
+    brown: { default: "#aa8a7b", darker: "#7f6658" },
+    gray: { default: "#b0b0b3", darker: "#878789" },
+    green: { default: "#8db594", darker: "#688b70" },
+    pink: { default: "#f7b5c4", darker: "#d4929f" },
+    purple: { default: "#b48dbf", darker: "#8a6a92" },
+    red: { default: "#fc6c6e", darker: "#c45254" },
+    white: { default: "#b0abc5", darker: "#9791b0" },
+    yellow: { default: "#e6c131", darker: "#ac8a2e" }
 }
 
 export const Colors = {

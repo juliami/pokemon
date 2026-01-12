@@ -35,7 +35,12 @@ export const GET_POKEMON_BY_ID = gql`
           name
         }
       }
+
     }
+      # Pokemon description/flavor text
+       pokemon_v2_pokemonspeciesflavortexts(where: {language_id: {_eq: 9}, version_id: {_eq: 1}}) {
+        flavor_text
+      }
     # Genus (eg. 'Seed Pokemon', 'Tiny Bird Pokemon')
     # In English (language_id: 9)
       pokemon_v2_pokemonspeciesnames(where: {language_id: {_eq: 9}}) {

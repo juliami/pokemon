@@ -1,21 +1,60 @@
+import { StyleSheet, View } from "react-native";
+
+import { Gaps } from '@/constants/layout';
+import { PokemonColors } from '@/constants/theme';
 import { DetailedPokemonSpecies } from '@/types';
-import { Image } from 'expo-image';
-import { StyleSheet } from "react-native";
+import { hexToRGBA } from '@/utils/color';
+
+
 import { ThemedText } from './themed-text';
-import { ThemedView } from './themed-view';
+import Surface from './ui/surface';
 
+type Props = Pick<DetailedPokemonSpecies, 'genus' | 'flavorText' | 'abilities' | 'height' | 'weight' | 'color'>;
 
-export const PokemonDetails = ({ pokemon }: { pokemon: DetailedPokemonSpecies }) => {
+export const PokemonDetails = ({ genus, flavorText, abilities, height, weight, color }: Props) => {
+
+    const flavorTextCleaned = flavorText.replace(/\n|\f/g, ' ');
+    const lightBackgroundColor = hexToRGBA(PokemonColors[color].default, 0.1) ;
+
     return (
-        <ThemedView style={styles.simpleView}>
-            <ThemedText type="title">{pokemon?.name}</ThemedText>
-            <Image source={{ uri: pokemon.imageUri }} style={{ width: 200, height: 200 }} />
-        </ThemedView>
+                <Surface>
+                    <View style={[styles.dataRow, { backgroundColor: lightBackgroundColor }]}>
+                        <ThemedText style={styles.label}>Genus</ThemedText>
+                        <ThemedText>{genus}</ThemedText>
+                    </View>
+                    <View style={styles.dataRow}>
+
+                        <ThemedText style={styles.label}>Size</ThemedText>
+                        <ThemedText>Height: {height} • Weight: {weight}</ThemedText>
+                    </View>
+
+                    <View style={[styles.dataRow, { backgroundColor:lightBackgroundColor }]}>
+                        <ThemedText style={styles.label}>Abilities</ThemedText>
+                        <ThemedText>{abilities}</ThemedText>
+                    </View>
+                    {flavorTextCleaned && <ThemedText style={styles.flavorText}>{flavorTextCleaned}</ThemedText>}
+
+                </Surface>
+
     )
 }
 
 const styles = StyleSheet.create({
-  simpleView: {
-    backgroundColor: 'transparent',
-  },
+ 
+  
+    flavorText: {
+        fontStyle: 'italic',
+        paddingBlock: Gaps.small,
+        paddingInline: Gaps.large,
+    },
+
+    label: {
+        fontWeight: 'bold',
+    },
+    dataRow: {
+        display: 'flex',
+        paddingBlock: Gaps.small,
+        paddingInline: Gaps.large,
+    }
+
 });
