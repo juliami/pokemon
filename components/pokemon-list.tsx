@@ -1,33 +1,64 @@
 import { useGetPokemonsQuery } from "@/hooks/use-get-pokemons-query";
-import { FlatList, StyleSheet, Text } from "react-native";
-
-
+import { useCallback, useState } from "react";
+import { FlatList, StyleSheet } from "react-native";
 import PokemonListItem from "./pokemon-list-item";
 import { ThemedText } from "./themed-text";
+import { WebButton } from "./web-button";
 
 const PokemonList = () => {
-  const { loading, error, data } = useGetPokemonsQuery();
+  const [refreshing, setRefreshing] = useState(false);
+  const { data, error, fetchMore, refetch } = useGetPokemonsQuery();
 
-  if (loading) return <ThemedText>Loading...</ThemedText>;
-  if (error) return <ThemedText>Error: {error.message}</ThemedText>;
+  const fetchNextPage = useCallback(() => {
+    if (!data?.pokemon_v2_pokemonspecies) return;
+    fetchMore({
+      variables: {
+        offset: data?.pokemon_v2_pokemonspecies.length
+      },
+      updateQuery: (prev, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prev;
+        return {
+          ...prev,
+          pokemon_v2_pokemonspecies: [
+            ...prev.pokemon_v2_pokemonspecies,
+            ...fetchMoreResult.pokemon_v2_pokemonspecies
+          ]
+        };
+      }
+    });
+  }, [fetchMore, data]);
+
+
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    refetch();
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 1000);
+  }, [refetch]);
+
 
   const pokemons = data?.pokemon_v2_pokemonspecies;
 
+  if (error) return <ThemedText>Error: {error.message}</ThemedText>;
+  if (!pokemons) return <ThemedText>No pokemons found</ThemedText>;
+
+
+
   return (
     <>
-      <ThemedText type="defaultSemiBold" style={styles.header}>
-        <Text>No.</Text>
-        <Text>Name</Text>
-        <Text style={styles.id}>Id</Text>
-      </ThemedText>
-
+      <WebButton onClick={onRefresh} text="Refresh Pokemons" />
       <FlatList
         data={pokemons}
         renderItem={({ item, index }) => (
           <PokemonListItem name={item.name} id={item.id} index={index} />
         )}
-        keyExtractor={(item) => item.id.toString()}
-        style={styles.list}
+        keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
+        onEndReached={fetchNextPage}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        contentContainerStyle={[styles.list, refreshing && { opacity: 0.3 }]}
       />
     </>
   );
@@ -35,16 +66,14 @@ const PokemonList = () => {
 
 const styles = StyleSheet.create({
   list: {
-    display: "flex",
+    padding: 32,
   },
-  header: {
-    display: "flex",
-    padding: 8,
-    flexDirection: "row",
-    gap: 4,
+  container: {
+    flex: 1,
   },
-  id: {
-    marginLeft: "auto",
+  scrollView: {
+    flex: 1,
+    justifyContent: 'center',
   },
 });
 
