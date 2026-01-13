@@ -1,6 +1,5 @@
 import { StyleSheet, View } from "react-native";
 
-import ToggleFavButton from "@/components/fav-button";
 import PokemonData from "@/components/pokemon-data";
 import PokemonImage from "@/components/pokemon-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
@@ -10,22 +9,22 @@ import { Gaps } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
 import { capitalizeFirstLetter } from "@/utils/text";
+import { useNavigation } from "expo-router";
+import ToggleFavButton from "./fav-button";
+import CloseButton from "./ui/close-button";
 
 export default function Pokemon({id}: {id: string}) {
 
     const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
+    const navigation = useNavigation();
 
-  if (!pokemon) {
-    return null;
-  }
 
-  if (loading) {
-    return (
-      <ThemedView style={[styles.container]}>
-        <ThemedText>Loading...</ThemedText>
-      </ThemedView>
-    );
-  }
+   const closeView = () => navigation.goBack();
+
+   if (!pokemon) {
+    closeView();
+    return;
+   }
 
   const backgroundColor = PokemonColors[pokemon.color].default;
   const {
@@ -56,13 +55,16 @@ export default function Pokemon({id}: {id: string}) {
             >
             {capitalizeFirstLetter(name)}
             </ThemedText>
-            <ToggleFavButton id={id.toString()} />
+            <CloseButton onPress={closeView} />
         </View>
         <PokemonTypePills
           types={types}
           backgroundColor={PokemonColors[color].darker}
         />
         <PokemonImage imageUri={imageUri} />
+        <View>
+          <ToggleFavButton id={id.toString()} />
+        </View>
       </View>
 
       <View style={styles.row}>

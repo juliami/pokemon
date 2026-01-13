@@ -14,8 +14,8 @@ const defaultContextValue: FavoritePokemonContextProps = {
 export const FavoritePokemonContext = createContext<FavoritePokemonContextProps | undefined>(defaultContextValue);
 
 export const FavoritePokemonProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const savedFavoritePokemoonId = useFavoritePokemonFromAsyncStorage();
-    const [favoritePokemonId, setFavoritePokemonId] = useState<string | null>(savedFavoritePokemoonId);
+    const savedFavoritePokemonId = useFavoritePokemonFromAsyncStorage();
+    const [favoritePokemonId, setFavoritePokemonId] = useState<string | null>(savedFavoritePokemonId);
 
     return (
         <FavoritePokemonContext.Provider value={{ favoritePokemonId, setFavoritePokemonId }}>
