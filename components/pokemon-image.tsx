@@ -19,21 +19,20 @@ const PokemonImage = ({ imageUri }: { imageUri: string }) => (
 
 const styles = StyleSheet.create({
   imageShadow: {
-    width: "100%",
-    height: "100%",
+    ...StyleSheet.absoluteFillObject,
     resizeMode: "contain",
     flexGrow: 1,
     position: "absolute",
     opacity: 0.15,
-    transform: [{ translateY: 50 }, { scale: 1.7 }],
+    transform: [{ translateY: 80 }, { scale: 1.7 }],
   },
   image: {
-    width: "100%",
-    height: "100%",
+    ...StyleSheet.absoluteFillObject,
+    paddingInline: 10,
     resizeMode: "contain",
     flexGrow: 1,
     zIndex: 5,
-    transform: [{ translateY: 10 }],
+    transform: [{ translateY: 60 }],
   },
 });
 

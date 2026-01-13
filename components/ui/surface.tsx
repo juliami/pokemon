@@ -16,8 +16,7 @@ const Surface: React.FC<Props> = (props: Props) => (
 
 const styles = StyleSheet.create({
   surface: {
-    width: "100%",
-    height: "100%",
+    ...StyleSheet.absoluteFillObject,
     boxSizing: "border-box",
     backgroundColor: "white",
     borderRadius: Radius.small,
