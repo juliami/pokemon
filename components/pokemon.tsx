@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 
 import ToggleFavButton from "@/components/fav-button";
-import { PokemonDetails } from "@/components/pokemon-details";
+import PokemonData from "@/components/pokemon-data";
 import PokemonImage from "@/components/pokemon-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
 import { ThemedText } from "@/components/themed-text";
@@ -66,7 +66,7 @@ export default function Pokemon({id}: {id: string}) {
       </View>
 
       <View style={styles.row}>
-        <PokemonDetails
+        <PokemonData
           genus={genus}
           flavorText={flavorText}
           height={height}
