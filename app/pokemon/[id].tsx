@@ -1,26 +1,27 @@
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { StyleSheet } from "react-native";
 
+import Loading from "@/components/loading";
 import Pokemon from "@/components/pokemon";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
+import { capitalizeFirstLetter } from "@/utils/text";
+import { useEffect } from "react";
 
-export default function ModalScreen() {
+export default function PokemonDetailsScreen() {
   const { id } = useLocalSearchParams();
   const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
+  const navigation = useNavigation();
 
-  if (!pokemon) {
-    return null;
+  useEffect(() => {
+    navigation.setOptions({
+      title: pokemon?.name ? capitalizeFirstLetter(pokemon.name) : "Loading...",
+    });
+  }, [navigation, pokemon]);
+
+  if (!pokemon || loading) {
+    return <Loading />;
   }
 
-  if (loading) {
-    return (
-      <ThemedView style={[styles.container]}>
-        <ThemedText>Loading...</ThemedText>
-      </ThemedView>
-    );
-  }
   return (
    <Pokemon id={id.toString()} />
   );
@@ -33,5 +34,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
   },
-
 });
