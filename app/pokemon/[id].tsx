@@ -11,7 +11,7 @@ import { PokemonColors } from "@/constants/theme";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
 import { capitalizeFirstLetter } from "@/utils/text";
 
-export default function ModalScreen() {
+export default function PokemonDetailsScreen() {
   const { id } = useLocalSearchParams();
   const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
 
