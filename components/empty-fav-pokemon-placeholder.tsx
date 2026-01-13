@@ -12,7 +12,7 @@ export default function EmptyFavoritePokemonPlaceholder() {
         source={require('@/assets/images/sad-pokemon.webp')}
         style={styles.image}
       />
-      <ThemedText >You have not picked a favorite Pokémon yet.<br /> Browse the list and select your favorite!</ThemedText>
+      <ThemedText style={{  textAlign: 'center'}}>You have not picked a favorite Pokémon yet.{"\n"}Browse the list and select your favorite!</ThemedText>
 
     </ThemedView>
   );
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
-    textAlign: 'center'
+  
   },
   row: {
     flexBasis: "50%",
