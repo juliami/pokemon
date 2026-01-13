@@ -5,6 +5,7 @@ import {
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { Platform } from "react-native";
 import "react-native-reanimated";
 
 import client from "@/api/client";
@@ -22,6 +23,13 @@ export default function RootLayout() {
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="pokemon/[id]"
+            options={{
+              headerShown: Platform.OS === "web",
+              presentation: "modal",
+            }}
+          />
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
