@@ -1,5 +1,4 @@
 import { FavoritePokemonContext } from "@/context/favorite-pokemon";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useContext } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { IconSymbol } from "./ui/icon-symbol";
@@ -17,10 +16,8 @@ const ToggleFavButton = ({ id }: { id: string }) => {
   const toggleFavoritePokemon = async () => {
     try {
       if (favoritePokemonId === id) {
-        await AsyncStorage.setItem("favorite-pokemon-id", "");
         setFavoritePokemonId(null);
       } else {
-        await AsyncStorage.setItem("favorite-pokemon-id", id);
         setFavoritePokemonId(id);
       }
     } catch (e) {
@@ -28,12 +25,14 @@ const ToggleFavButton = ({ id }: { id: string }) => {
     }
   };
 
+  const isFavorite = favoritePokemonId === id;
+
   return (
     <View style={styles.button}>
       <Pressable onPress={toggleFavoritePokemon}>
         <IconSymbol
           size={40}
-          name={favoritePokemonId === id ? "heart.fill" : "heart"}
+          name={isFavorite ? "heart.fill" : "heart"}
           color={"#fff"}
         />
       </Pressable>

@@ -1,5 +1,5 @@
-import { useFavoritePokemonFromAsyncStorage } from "@/hooks/use-favorite-pokemon-from-async-storage";
-import React, { createContext, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useEffect, useState } from "react";
 
 interface FavoritePokemonContextProps {
   favoritePokemonId: string | null;
@@ -15,13 +15,28 @@ export const FavoritePokemonContext = createContext<
   FavoritePokemonContextProps | undefined
 >(defaultContextValue);
 
+const FAV_POKEMON_KEY = "favorite-pokemon-id";
+
 export const FavoritePokemonProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const savedFavoritePokemonId = useFavoritePokemonFromAsyncStorage();
   const [favoritePokemonId, setFavoritePokemonId] = useState<string | null>(
-    savedFavoritePokemonId,
+    null,
   );
+
+  useEffect(() => {
+    AsyncStorage.getItem(FAV_POKEMON_KEY).then((value) => {
+      if (value) {
+        setFavoritePokemonId(value);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (favoritePokemonId) {
+      AsyncStorage.setItem(FAV_POKEMON_KEY, favoritePokemonId);
+    }
+  }, [favoritePokemonId]);
 
   return (
     <FavoritePokemonContext.Provider

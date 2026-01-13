@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   },
   bottomIconContainer: {
     alignItems: "flex-end",
+    zIndex: 5,
   },
   pillsContainer: {
     flexGrow: 1,
