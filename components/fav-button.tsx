@@ -32,7 +32,7 @@ const ToggleFavButton = ({ id }: { id: string }) => {
         <Pressable onPress={toggleFavoritePokemon}>
             <IconSymbol
                 size={50}
-                name={favoritePokemonId === id ? "heart.fill" : "heart.circle"}
+                name={favoritePokemonId === id ? "heart.fill" : "heart"}
                 color={"#fff"}
             />
         </Pressable>
