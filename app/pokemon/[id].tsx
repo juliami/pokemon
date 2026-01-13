@@ -1,4 +1,4 @@
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 import Loading from "@/components/loading";
@@ -7,24 +7,29 @@ import PokemonImage from "@/components/pokemon-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import CloseButton from "@/components/ui/close-button";
 import { Gaps } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
 import { capitalizeFirstLetter } from "@/utils/text";
+import React, { useEffect } from "react";
 
 export default function PokemonDetailsScreen() {
   const { id } = useLocalSearchParams();
   const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
+  const navigation = useNavigation();
 
-  if (!pokemon) {
-    return null;
+  useEffect(() => {
+    navigation.setOptions({
+      title: pokemon?.name ? capitalizeFirstLetter(pokemon.name) : "Loading...",
+    });
+  }, [navigation, pokemon]);
+
+  if (!pokemon || loading) {
+    return <Loading />;
   }
 
-  if (loading) {
-    return (
-      <Loading />
-    );
-  }
+  const closeModal = () => navigation.goBack();
 
   const backgroundColor = PokemonColors[pokemon.color].default;
   const {
@@ -42,18 +47,21 @@ export default function PokemonDetailsScreen() {
   return (
     <ThemedView style={[styles.container, { backgroundColor }]}>
       <View style={[styles.row, styles.header]}>
-        <ThemedText
-          style={[
-            styles.title,
-            {
-              textShadowColor: PokemonColors[color].darker,
-              textShadowOffset: { width: 2, height: 2 },
-              textShadowRadius: 2,
-            },
-          ]}
-        >
-          {capitalizeFirstLetter(name)}
-        </ThemedText>
+        <View style={styles.titleContainer}>
+          <ThemedText
+            style={[
+              styles.title,
+              {
+                textShadowColor: PokemonColors[color].darker,
+                textShadowOffset: { width: 2, height: 2 },
+                textShadowRadius: 2,
+              },
+            ]}
+          >
+            {capitalizeFirstLetter(name)}
+          </ThemedText>
+          <CloseButton onPress={closeModal} />
+        </View>
         <PokemonTypePills
           types={types}
           backgroundColor={PokemonColors[color].darker}
@@ -87,11 +95,17 @@ const styles = StyleSheet.create({
     fontSize: 42,
     lineHeight: 54,
     fontWeight: "bold",
+    flexGrow: 1,
+  },
+  titleContainer: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: Gaps.medium,
     zIndex: 2,
   },
   header: {
-    padding: Gaps.medium,
+    padding: Gaps.large,
     zIndex: 5,
   },
   row: {

@@ -24,14 +24,15 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     position: "absolute",
     opacity: 0.15,
-    transform: [{ translateY: 50 }, { scale: 1.7 }],
+    transform: [{ translateY: 80 }, { scale: 1.7 }],
   },
   image: {
     ...StyleSheet.absoluteFillObject,
+    paddingInline: 10,
     resizeMode: "contain",
     flexGrow: 1,
     zIndex: 5,
-    transform: [{ translateY: 10 }],
+    transform: [{ translateY: 60 }],
   },
 });
 
