@@ -24,7 +24,7 @@ const FavoriteScreen = () => {
 
   return (
     <SimpleView>
-      <Pokemon id={favoritePokemonId} />
+      <Pokemon id={favoritePokemonId} showCloseButton={false} />
     </SimpleView>
   );
 };

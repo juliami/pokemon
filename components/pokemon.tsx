@@ -13,7 +13,7 @@ import { useNavigation } from "expo-router";
 import ToggleFavButton from "./fav-button";
 import CloseButton from "./ui/close-button";
 
-export default function Pokemon({ id }: { id: string }) {
+export default function Pokemon({ id, showCloseButton = true }: { id: string, showCloseButton?: boolean }) {
   const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
   const navigation = useNavigation();
 
@@ -53,7 +53,7 @@ export default function Pokemon({ id }: { id: string }) {
           >
             {capitalizeFirstLetter(name)}
           </ThemedText>
-          <CloseButton onPress={closeView} />
+          {showCloseButton && <CloseButton onPress={closeView} />}
         </View>
         <View style={styles.pillsContainer}>
           <PokemonTypePills
