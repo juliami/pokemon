@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 
 
-export const useFavoritePokemon = (): string | null => {
+export const useFavoritePokemonFromAsyncStorage = (): string | null => {
   const [value, setValue] = useState<string | null>(null);
 
 

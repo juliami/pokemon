@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 import client from "@/api/client";
+import { FavoritePokemonProvider } from "@/context/favorite-pokemon";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { ApolloProvider } from "@apollo/client/react";
 
@@ -19,6 +20,7 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   return (
     <ApolloProvider client={client}>
+      <FavoritePokemonProvider>
       <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -33,6 +35,7 @@ export default function RootLayout() {
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
+      </FavoritePokemonProvider>
     </ApolloProvider>
   );
 }
