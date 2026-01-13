@@ -1,34 +1,28 @@
-import { useLocalSearchParams, useNavigation } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
-import Loading from "@/components/loading";
-import { PokemonDetails } from "@/components/pokemon-details";
+import PokemonData from "@/components/pokemon-data";
 import PokemonImage from "@/components/pokemon-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
-import { StyledText } from "@/components/styled-text";
-import CloseButton from "@/components/ui/close-button";
 import { Gaps } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
 import { capitalizeFirstLetter } from "@/utils/text";
-import React, { useEffect } from "react";
+import { useNavigation } from "expo-router";
+import React from "react";
+import ToggleFavButton from "./fav-button";
+import { StyledText } from "./styled-text";
+import CloseButton from "./ui/close-button";
 
-export default function PokemonDetailsScreen() {
-  const { id } = useLocalSearchParams();
+export default function Pokemon({ id }: { id: string }) {
   const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
   const navigation = useNavigation();
 
-  useEffect(() => {
-    navigation.setOptions({
-      title: pokemon?.name ? capitalizeFirstLetter(pokemon.name) : "Loading...",
-    });
-  }, [navigation, pokemon]);
+  const closeView = () => navigation.goBack();
 
-  if (!pokemon || loading) {
-    return <Loading />;
+  if (!pokemon) {
+    closeView();
+    return;
   }
-
-  const closeModal = () => navigation.goBack();
 
   const backgroundColor = PokemonColors[pokemon.color].default;
   const {
@@ -59,17 +53,22 @@ export default function PokemonDetailsScreen() {
           >
             {capitalizeFirstLetter(name)}
           </StyledText>
-          <CloseButton onPress={closeModal} />
+          <CloseButton onPress={closeView} />
         </View>
-        <PokemonTypePills
-          types={types}
-          backgroundColor={PokemonColors[color].darker}
-        />
+        <View style={styles.pillsContainer}>
+          <PokemonTypePills
+            types={types}
+            backgroundColor={PokemonColors[color].darker}
+          />
+        </View>
         <PokemonImage imageUri={imageUri} />
+        <View style={styles.bottomIconContainer}>
+          <ToggleFavButton id={id.toString()} />
+        </View>
       </View>
 
       <View style={styles.row}>
-        <PokemonDetails
+        <PokemonData
           genus={genus}
           flavorText={flavorText}
           height={height}
@@ -104,11 +103,18 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   header: {
-    padding: Gaps.large,
+    padding: Gaps.medium,
     zIndex: 5,
   },
   row: {
     flexBasis: "50%",
     width: "100%",
+  },
+  bottomIconContainer: {
+    alignItems: "flex-end",
+    zIndex: 5,
+  },
+  pillsContainer: {
+    flexGrow: 1,
   },
 });
