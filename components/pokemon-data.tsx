@@ -65,5 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-
-export default PokemonData
+export default PokemonData;
