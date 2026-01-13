@@ -1,6 +1,7 @@
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
+import Loading from "@/components/loading";
 import { PokemonDetails } from "@/components/pokemon-details";
 import PokemonImage from "@/components/pokemon-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
@@ -21,9 +22,7 @@ export default function PokemonDetailsScreen() {
 
   if (loading) {
     return (
-      <ThemedView style={[styles.container]}>
-        <ThemedText>Loading...</ThemedText>
-      </ThemedView>
+      <Loading />
     );
   }
 
