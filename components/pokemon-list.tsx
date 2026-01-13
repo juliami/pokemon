@@ -2,8 +2,7 @@ import { useGetPokemonsQuery } from "@/hooks/use-get-pokemons-query";
 import { useCallback, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import PokemonListItem from "./pokemon-list-item";
-import { ThemedText } from "./themed-text";
-import { WebButton } from "./web-button";
+import { StyledText } from "./styled-text";
 
 const PokemonList = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -38,12 +37,11 @@ const PokemonList = () => {
 
   const pokemons = data?.pokemon_v2_pokemonspecies;
 
-  if (error) return <ThemedText>Error: {error.message}</ThemedText>;
-  if (!pokemons) return <ThemedText>No pokemons found</ThemedText>;
+  if (error) return <StyledText>Error: {error.message}</StyledText>;
+  if (!pokemons) return <StyledText>No pokemons found</StyledText>;
 
   return (
     <>
-      <WebButton onClick={onRefresh} text="Refresh Pokemons" />
       <FlatList
         data={pokemons}
         renderItem={({ item, index }) => (
