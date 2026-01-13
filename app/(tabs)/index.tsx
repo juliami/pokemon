@@ -1,6 +1,7 @@
+import EmptyFavoritePokemonPlaceholder from "@/components/empty-fav-pokemon-placeholder";
 import Pokemon from "@/components/pokemon";
+
 import { SimpleView } from "@/components/simple-view";
-import { ThemedText } from "@/components/themed-text";
 import { FavoritePokemonContext } from "@/context/favorite-pokemon";
 import React, { useContext } from 'react';
 
@@ -16,7 +17,7 @@ const FavoriteScreen = () => {
   if (!favoritePokemonId) {
     return (
         <SimpleView>
-          <ThemedText type="defaultSemiBold">You haven't chosen a favorite Pokémon yet.</ThemedText>
+          <EmptyFavoritePokemonPlaceholder/>
         </SimpleView>
     )
     
