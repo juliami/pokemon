@@ -1,25 +1,33 @@
-import { useFavoritePokemonFromAsyncStorage } from '@/hooks/use-favorite-pokemon-from-async-storage';
-import React, { createContext, useState } from 'react';
+import { useFavoritePokemonFromAsyncStorage } from "@/hooks/use-favorite-pokemon-from-async-storage";
+import React, { createContext, useState } from "react";
 
 interface FavoritePokemonContextProps {
-    favoritePokemonId: string | null;
-    setFavoritePokemonId: (id: string | null) => void;
+  favoritePokemonId: string | null;
+  setFavoritePokemonId: (id: string | null) => void;
 }
 
 const defaultContextValue: FavoritePokemonContextProps = {
-    favoritePokemonId: null,
-    setFavoritePokemonId: () => {} 
+  favoritePokemonId: null,
+  setFavoritePokemonId: () => {},
 };
 
-export const FavoritePokemonContext = createContext<FavoritePokemonContextProps | undefined>(defaultContextValue);
+export const FavoritePokemonContext = createContext<
+  FavoritePokemonContextProps | undefined
+>(defaultContextValue);
 
-export const FavoritePokemonProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-    const savedFavoritePokemonId = useFavoritePokemonFromAsyncStorage();
-    const [favoritePokemonId, setFavoritePokemonId] = useState<string | null>(savedFavoritePokemonId);
+export const FavoritePokemonProvider: React.FC<{
+  children: React.ReactNode;
+}> = ({ children }) => {
+  const savedFavoritePokemonId = useFavoritePokemonFromAsyncStorage();
+  const [favoritePokemonId, setFavoritePokemonId] = useState<string | null>(
+    savedFavoritePokemonId,
+  );
 
-    return (
-        <FavoritePokemonContext.Provider value={{ favoritePokemonId, setFavoritePokemonId }}>
-            {children}
-        </FavoritePokemonContext.Provider>
-    );
+  return (
+    <FavoritePokemonContext.Provider
+      value={{ favoritePokemonId, setFavoritePokemonId }}
+    >
+      {children}
+    </FavoritePokemonContext.Provider>
+  );
 };

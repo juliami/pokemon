@@ -22,9 +22,7 @@ export default function PokemonDetailsScreen() {
     return <Loading />;
   }
 
-  return (
-   <Pokemon id={id.toString()} />
-  );
+  return <Pokemon id={id.toString()} />;
 }
 
 const styles = StyleSheet.create({

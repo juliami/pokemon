@@ -7,7 +7,7 @@ const CloseButton = ({ onPress }: { onPress: () => void }) => {
   }
   return (
     <Pressable onPress={onPress}>
-      <IconSymbol size={32} name={"xmark"} color={"#fff"} weight="medium" />
+      <IconSymbol size={32} name={"xmark"} color={"#fff"} />
     </Pressable>
   );
 };

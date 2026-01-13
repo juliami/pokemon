@@ -13,18 +13,16 @@ import { useNavigation } from "expo-router";
 import ToggleFavButton from "./fav-button";
 import CloseButton from "./ui/close-button";
 
-export default function Pokemon({id}: {id: string}) {
+export default function Pokemon({ id }: { id: string }) {
+  const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
+  const navigation = useNavigation();
 
-    const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
-    const navigation = useNavigation();
+  const closeView = () => navigation.goBack();
 
-
-   const closeView = () => navigation.goBack();
-
-   if (!pokemon) {
+  if (!pokemon) {
     closeView();
     return;
-   }
+  }
 
   const backgroundColor = PokemonColors[pokemon.color].default;
   const {
@@ -43,26 +41,28 @@ export default function Pokemon({id}: {id: string}) {
     <ThemedView style={[styles.container, { backgroundColor }]}>
       <View style={[styles.row, styles.header]}>
         <View style={styles.titleContainer}>
-            <ThemedText
+          <ThemedText
             style={[
-                styles.title,
-                {
+              styles.title,
+              {
                 textShadowColor: PokemonColors[color].darker,
                 textShadowOffset: { width: 2, height: 2 },
                 textShadowRadius: 2,
-                },
+              },
             ]}
-            >
+          >
             {capitalizeFirstLetter(name)}
-            </ThemedText>
-            <CloseButton onPress={closeView} />
+          </ThemedText>
+          <CloseButton onPress={closeView} />
         </View>
-        <PokemonTypePills
-          types={types}
-          backgroundColor={PokemonColors[color].darker}
-        />
+        <View style={styles.pillsContainer}>
+          <PokemonTypePills
+            types={types}
+            backgroundColor={PokemonColors[color].darker}
+          />
+        </View>
         <PokemonImage imageUri={imageUri} />
-        <View>
+        <View style={styles.bottomIconContainer}>
           <ToggleFavButton id={id.toString()} />
         </View>
       </View>
@@ -96,9 +96,9 @@ const styles = StyleSheet.create({
     flexGrow: 1,
   },
   titleContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: Gaps.medium,
     zIndex: 2,
   },
@@ -109,5 +109,11 @@ const styles = StyleSheet.create({
   row: {
     flexBasis: "50%",
     width: "100%",
+  },
+  bottomIconContainer: {
+    alignItems: "flex-end",
+  },
+  pillsContainer: {
+    flexGrow: 1,
   },
 });
