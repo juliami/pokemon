@@ -3,15 +3,20 @@ import { StyleSheet, View } from "react-native";
 
 import { StyledText } from "@/components/styled-text";
 
-export default function EmptyFavoritePokemonPlaceholder() {
+interface Props { 
+  text: string;
+  image?: string
+}
+export default function EmptyFavoritePokemonPlaceholder({text, image} : Props) {
+  const showCameraImage = image === 'camera'
   return (
     <View style={styles.container}>
       <Image
-        source={require("@/assets/images/sad-pokemon.webp")}
+        source={showCameraImage ?  require("@/assets/images/pokemon-camera.webp") : require("@/assets/images/sad-pokemon.webp")}
         style={styles.image}
       />
       <StyledText style={{ textAlign: "center", width: '100%', height: 80 }}>
-        Your favorite Pokémon will live here.{"\n"}Go to Pokémon list and pick one!
+       {text}
       </StyledText>
     </View>
   );
