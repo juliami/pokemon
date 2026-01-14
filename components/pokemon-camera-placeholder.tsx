@@ -7,11 +7,11 @@ export default function EmptyFavoritePokemonPlaceholder() {
   return (
     <View style={styles.container}>
       <Image
-        source={require("@/assets/images/sad-pokemon.webp")}
+        source={require("@/assets/images/pokemon-camera.webp")}
         style={styles.image}
       />
       <StyledText style={{ textAlign: "center", width: '100%', height: 80 }}>
-        Your favorite Pokémon will live here.{"\n"}Go to Pokémon list and pick one!
+        Ready for the Pokémon Camera?{"\n"}Choose your favorite Pokémon and start.
       </StyledText>
     </View>
   );
