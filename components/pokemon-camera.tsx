@@ -1,6 +1,7 @@
 import { Image } from "expo-image";
 import { useRef, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Camera as VisionCamera,
   useCameraDevice,
@@ -52,9 +53,7 @@ const PokemonCamera = ({pokemonImageUri} : {pokemonImageUri: string}) => {
   }
 
   return (
-    <View style={styles.container}>
-
-
+    <SafeAreaView style={styles.container}>
       <Camera
         style={StyleSheet.absoluteFill}
         device={cameraDevice}
@@ -74,7 +73,7 @@ const PokemonCamera = ({pokemonImageUri} : {pokemonImageUri: string}) => {
         },]}
 
       />}
-    </View>
+    </SafeAreaView>
   )
 }
 

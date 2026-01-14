@@ -1,4 +1,4 @@
-import EmptyFavoritePokemonPlaceholder from "@/components/empty-fav-pokemon-placeholder";
+import Placeholder from "@/components/placeholder";
 import Pokemon from "@/components/pokemon";
 
 import { useFavoritePokemonContext } from "@/hooks/use-favorite-pokemon-context";
@@ -9,7 +9,7 @@ const FavoriteScreen = () => {
 
   if (!favoritePokemonId) {
     return (
-      <EmptyFavoritePokemonPlaceholder
+      <Placeholder
         text={'Your favorite Pokémon will live here.\nGo to Pokémon list and pick one!'}
       />
     );
