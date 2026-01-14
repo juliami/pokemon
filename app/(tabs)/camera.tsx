@@ -1,9 +1,8 @@
-import EmptyFavoritePokemonPlaceholder from "@/components/empty-fav-pokemon-placeholder";
+import Placeholder from "@/components/placeholder";
 import PokemonCamera from "@/components/pokemon-camera";
 import { useFavoritePokemonContext } from "@/hooks/use-favorite-pokemon-context";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
 import { Button, StyleSheet } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import {
   useCameraPermission
 } from 'react-native-vision-camera';
@@ -11,34 +10,42 @@ import {
 const CameraScreen = () => {
 
   const cameraPermissionStatus = useCameraPermission();
-  const { requestPermission } = cameraPermissionStatus;
+  const { hasPermission, requestPermission } = cameraPermissionStatus;
 
   const { favoritePokemonId } = useFavoritePokemonContext();
   const { data } = useGetPokemonByIdQuery(Number(favoritePokemonId));
-  const hasPermission = false;
-  const handlePress = () => {
-    requestPermission().then((result) => console.log({ result }));
+
+  if (!hasPermission) {
+    return (
+        <Placeholder
+          text={'Camera access needed'}
+          image='camera'
+        >
+          <Button onPress={requestPermission} title="Request access" />
+        </Placeholder>
+
+    )
   }
 
   if (!favoritePokemonId || !data) {
     return (
-      <EmptyFavoritePokemonPlaceholder
+      <Placeholder
         text={'Ready for the Pokémon Camera?\nChoose your favorite Pokémon and start.'}
         image='camera'
       />
     )
   }
 
-  const { imageUri } = data;
+  if (favoritePokemonId && data) {
+    const { imageUri } = data;
+    return (<PokemonCamera pokemonImageUri={imageUri} />
+    )
+  }
 
-  return (
-    <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
-
-      {hasPermission && <PokemonCamera pokemonImageUri={imageUri} />}
-      {!hasPermission && <Button onPress={handlePress} title="Request" />}
-
-    </SafeAreaView>
-  );
+  return (<Placeholder
+    text={'Ready for the Pokémon Camera?\nChoose your favorite Pokémon and start.'}
+    image='camera'
+  />);
 };
 
 
@@ -49,7 +56,6 @@ const styles = StyleSheet.create({
     height: '100%',
     position: 'relative'
   },
-
 });
 
 export default CameraScreen;

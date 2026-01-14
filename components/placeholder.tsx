@@ -6,8 +6,9 @@ import { StyledText } from "@/components/styled-text";
 interface Props { 
   text: string;
   image?: string
+  children?: React.ReactNode;
 }
-export default function EmptyFavoritePokemonPlaceholder({text, image} : Props) {
+export default function EmptyFavoritePokemonPlaceholder({text, image, children} : Props) {
   const showCameraImage = image === 'camera'
   return (
     <View style={styles.container}>
@@ -18,6 +19,7 @@ export default function EmptyFavoritePokemonPlaceholder({text, image} : Props) {
       <StyledText style={{ textAlign: "center", width: '100%', height: 80 }}>
        {text}
       </StyledText>
+      {children}
     </View>
   );
 }
