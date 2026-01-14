@@ -15,6 +15,7 @@ export function StyledText({
     <Text
       style={[
         { color: darkColor },
+        {fontFamily: 'Slate'},
         type === "default" ? styles.default : undefined,
         type === "title" ? styles.title : undefined,
         type === "defaultSemiBold" ? styles.defaultSemiBold : undefined,
