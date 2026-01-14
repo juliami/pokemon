@@ -4,17 +4,17 @@ import PokemonData from "@/components/pokemon-data";
 import PokemonImage from "@/components/pokemon-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
 import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
 import { Gaps } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
 import { capitalizeFirstLetter } from "@/utils/text";
 import { useNavigation } from "expo-router";
 import ToggleFavButton from "./fav-button";
+import { ThemedView } from "./themed-view";
 import CloseButton from "./ui/close-button";
 
-export default function Pokemon({ id, showCloseButton = true }: { id: string, showCloseButton?: boolean }) {
-  const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
+export default function Pokemon({ id }: { id: string }) {
+  const { data: pokemon } = useGetPokemonByIdQuery(Number(id));
   const navigation = useNavigation();
 
   const closeView = () => navigation.goBack();
@@ -53,7 +53,7 @@ export default function Pokemon({ id, showCloseButton = true }: { id: string, sh
           >
             {capitalizeFirstLetter(name)}
           </ThemedText>
-          {showCloseButton && <CloseButton onPress={closeView} />}
+          <CloseButton onPress={closeView} />
         </View>
         <View style={styles.pillsContainer}>
           <PokemonTypePills
@@ -85,7 +85,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    justifyContent: "center",
     height: "100%",
   },
   title: {
