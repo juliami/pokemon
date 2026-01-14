@@ -1,56 +1,90 @@
-import { StyledText } from "@/components/styled-text";
-import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { Image } from "expo-image";
+import { useRef, useState } from "react";
+import { Button, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Camera, useCameraDevice } from 'react-native-vision-camera';
-
-
+import {
+  Camera as VisionCamera,
+  useCameraDevice,
+  useCameraPermission
+} from 'react-native-vision-camera';
+import {
+  Bounds,
+  Camera,
+  Face,
+  FrameFaceDetectionOptions
+} from 'react-native-vision-camera-face-detector';
 
 const CameraScreen = () => {
-  const [cameraPermission, setCameraPermission] = useState<string>();
+  const [faceBound, setFaceBounds] = useState<Bounds | undefined>(undefined);
 
-  useEffect(() => {
-    (async () => {
-      const cameraPermissionStatus = await Camera.requestCameraPermission();
-      setCameraPermission(cameraPermissionStatus);
-    })();
-  }, []);
+  const cameraPermissionStatus = useCameraPermission();
+  const { hasPermission, requestPermission } = cameraPermissionStatus;
+
+  const faceDetectionOptions = useRef<FrameFaceDetectionOptions>({
+    // detection options
+  }).current
+
+  const ref = useRef<VisionCamera>(null)
+
+
   const cameraDevice = useCameraDevice('front')
 
-  console.log({ cameraDevice })
+  console.log({ cameraPermissionStatus })
 
-  // useEffect(() => {
-  //   console.log(faces);
-  // }, [faces]);
+  const handlePress = () => {
+    requestPermission().then((result) => console.log({ result }));
+  }
 
-
-  // const frameProcessor = useFrameProcessor((frame) => {
-  //   'worklet';
-  //   const scannedFaces = scanFaces(frame);
-  //   runOnJS(setFaces)(scannedFaces);
-  // }, []);
-
-  const renderDetectorContent = () => {
-    if (cameraDevice && cameraPermission === 'granted') {
-      return (
-        <Camera
-          style={StyleSheet.absoluteFill}
-          device={cameraDevice}
-          isActive={true}
-        />
-      );
+  const handleFacesDetection = (
+    faces: Face[],
+  ) => {
+    if (faces[0].bounds) {
+      setFaceBounds(faces[0].bounds)
+    } else {
+      setFaceBounds(undefined)
     }
-    return <ActivityIndicator size="large" color="#1C6758" />;
-  };
+  }
+
+  const getSize = () => {
+    if (!faceBound?.height || !faceBound.width) {
+      return {}
+    }
+    return ({ height: faceBound?.height * 0.4, width: faceBound?.width * 0.4 })
+  }
+
+  const getPosition = () => {
+    if (!faceBound?.x || !faceBound.y) {
+      return {}
+    }
+    return ({ left: faceBound?.x, top: faceBound?.y })
+  }
+
+
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
-      <StyledText>Camera permission status: {cameraPermission}</StyledText>
-
-
       <View style={styles.container}>
 
-        {renderDetectorContent()}
+        {hasPermission && cameraDevice && <Camera
+          style={StyleSheet.absoluteFill}
+          device={cameraDevice}
+          isActive={true}
+          faceDetectionCallback={handleFacesDetection}
+          faceDetectionOptions={faceDetectionOptions}
+          ref={ref}
+        />}
+        {!hasPermission && <Button onPress={handlePress} title="Request" />}
+        {faceBound && <Image
+          source={require("@/assets/images/sad-pokemon.webp")}
+          style={[styles.image, {
+            height: getSize().height,
+            width: getSize().width,
+            transform: [{ translateX: '-50%' }],
+            top: getPosition().top,
+            right: getPosition().left
+          },]}
+
+        />}
       </View>
     </SafeAreaView>
   );
@@ -61,10 +95,20 @@ const CameraScreen = () => {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    height: 500,
-    backgroundColor: 'tint',
+    height: '100%',
     position: 'relative'
   },
+  cameraWrapper: {
+    position: 'relative'
+  },
+  image: {
+    width: 300,
+    height: 300,
+    position: 'absolute',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
+
+
+  }
 });
 
 export default CameraScreen;

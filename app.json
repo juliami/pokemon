@@ -51,9 +51,18 @@
       [
         "react-native-vision-camera",
         {
-          "cameraPermissionText": "Pokemon needs access to your Camera.",
+          "cameraPermissionText": "Pokemon needs access to your Camera."
         }
-      ]
+      ],
+      ["expo-build-properties", {
+          "android": {
+            "minSdkVersion": 34
+          },
+          "ios": {
+            "deploymentTarget": "26.0"
+          }
+        }
+    ]
     ],
     "experiments": {
       "typedRoutes": true,
