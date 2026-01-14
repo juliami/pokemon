@@ -6,6 +6,7 @@ import "react-native-reanimated";
 
 import client from "@/api/client";
 import { ApolloProvider } from "@apollo/client/react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export const unstable_settings = {
   anchor: "(tabs)",
@@ -14,6 +15,7 @@ export const unstable_settings = {
 export default function RootLayout() {
   return (
     <ApolloProvider client={client}>
+       <SafeAreaProvider>
       <ThemeProvider value={DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -27,6 +29,7 @@ export default function RootLayout() {
         </Stack>
         <StatusBar style="auto" />
       </ThemeProvider>
+      </SafeAreaProvider>
     </ApolloProvider>
   );
 }

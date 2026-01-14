@@ -23,6 +23,7 @@ const MAPPING = {
   "chevron.right": "chevron-right",
   "heart.fill": "favorite",
   "list.bullet": "list",
+  "camera": "camera",
   xmark: "close",
 } as IconMapping;
 
