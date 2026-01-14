@@ -5,7 +5,7 @@ import { PokemonColors } from "@/constants/theme";
 import { DetailedPokemonSpecies } from "@/types";
 import { hexToRGBA } from "@/utils/color";
 
-import { ThemedText } from "./themed-text";
+import { StyledText } from "./styled-text";
 import Surface from "./ui/surface";
 
 type Props = Pick<
@@ -27,22 +27,22 @@ const PokemonData = ({
   return (
     <Surface>
       <View style={[styles.dataRow, { backgroundColor: lightBackgroundColor }]}>
-        <ThemedText style={styles.label}>Genus</ThemedText>
-        <ThemedText>{genus}</ThemedText>
+        <StyledText style={styles.label}>Genus</StyledText>
+        <StyledText>{genus}</StyledText>
       </View>
       <View style={styles.dataRow}>
-        <ThemedText style={styles.label}>Size</ThemedText>
-        <ThemedText>
+        <StyledText style={styles.label}>Size</StyledText>
+        <StyledText>
           Height: {height} • Weight: {weight}
-        </ThemedText>
+        </StyledText>
       </View>
 
       <View style={[styles.dataRow, { backgroundColor: lightBackgroundColor }]}>
-        <ThemedText style={styles.label}>Abilities</ThemedText>
-        <ThemedText>{abilities}</ThemedText>
+        <StyledText style={styles.label}>Abilities</StyledText>
+        <StyledText>{abilities}</StyledText>
       </View>
       {flavorTextCleaned && (
-        <ThemedText style={styles.flavorText}>{flavorTextCleaned}</ThemedText>
+        <StyledText style={styles.flavorText}>{flavorTextCleaned}</StyledText>
       )}
     </Surface>
   );

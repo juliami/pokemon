@@ -1,21 +1,20 @@
 import { Image } from "expo-image";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import { ThemedText } from "@/app-example/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
+import { StyledText } from "@/components/styled-text";
 
 export default function EmptyFavoritePokemonPlaceholder() {
   return (
-    <ThemedView style={styles.container}>
+    <View style={styles.container}>
       <Image
         source={require("@/assets/images/sad-pokemon.webp")}
         style={styles.image}
       />
-      <ThemedText style={{ textAlign: "center" }}>
+      <StyledText style={{ textAlign: "center" }}>
         You have not picked a favorite Pokémon yet.{"\n"}Browse the list and
         select your favorite!
-      </ThemedText>
-    </ThemedView>
+      </StyledText>
+    </View>
   );
 }
 
