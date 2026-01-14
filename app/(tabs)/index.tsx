@@ -7,6 +7,7 @@ import React, { useContext } from "react";
 
 const FavoriteScreen = () => {
   const favoritePokemonContext = useContext(FavoritePokemonContext);
+
   if (!favoritePokemonContext) {
     throw new Error(
       "useContext(FavoritePokemonContext) must be inside a FavoritePokemonProvider",

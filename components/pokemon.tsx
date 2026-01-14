@@ -10,15 +10,25 @@ import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
 import { capitalizeFirstLetter } from "@/utils/text";
 import { useNavigation } from "expo-router";
 import ToggleFavButton from "./fav-button";
+import Loading from "./loading";
 import { ThemedView } from "./themed-view";
 import CloseButton from "./ui/close-button";
 
-export default function Pokemon({ id }: { id: string }) {
-  const { data: pokemon } = useGetPokemonByIdQuery(Number(id));
+export default function Pokemon({
+  id,
+  showCloseButton,
+}: {
+  id: string;
+  showCloseButton: boolean;
+}) {
+  const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
   const navigation = useNavigation();
 
   const closeView = () => navigation.goBack();
 
+  if (loading) {
+    return <Loading />;
+  }
   if (!pokemon) {
     closeView();
     return;
@@ -53,7 +63,7 @@ export default function Pokemon({ id }: { id: string }) {
           >
             {capitalizeFirstLetter(name)}
           </ThemedText>
-          <CloseButton onPress={closeView} />
+          {showCloseButton && <CloseButton onPress={closeView} />}
         </View>
         <View style={styles.pillsContainer}>
           <PokemonTypePills
