@@ -13,7 +13,7 @@ type Props = Pick<
   "genus" | "flavorText" | "abilities" | "height" | "weight" | "color"
 >;
 
-export const PokemonDetails = ({
+const PokemonData = ({
   genus,
   flavorText,
   abilities,
@@ -64,3 +64,5 @@ const styles = StyleSheet.create({
     paddingInline: Gaps.large,
   },
 });
+
+export default PokemonData;
