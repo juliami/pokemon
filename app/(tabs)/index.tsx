@@ -2,18 +2,11 @@ import EmptyFavoritePokemonPlaceholder from "@/components/empty-fav-pokemon-plac
 import Pokemon from "@/components/pokemon";
 
 import { SimpleView } from "@/components/simple-view";
-import { FavoritePokemonContext } from "@/context/favorite-pokemon";
-import React, { useContext } from "react";
+import { useFavoritePokemonContext } from "@/hooks/use-favorite-pokemon-context";
+
 
 const FavoriteScreen = () => {
-  const favoritePokemonContext = useContext(FavoritePokemonContext);
-
-  if (!favoritePokemonContext) {
-    throw new Error(
-      "useContext(FavoritePokemonContext) must be inside a FavoritePokemonProvider",
-    );
-  }
-  const { favoritePokemonId } = favoritePokemonContext;
+  const {favoritePokemonId} = useFavoritePokemonContext();
 
   if (!favoritePokemonId) {
     return (
