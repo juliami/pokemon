@@ -1,25 +1,22 @@
 import EmptyFavoritePokemonPlaceholder from "@/components/empty-fav-pokemon-placeholder";
 import Pokemon from "@/components/pokemon";
 
-import { SimpleView } from "@/components/simple-view";
 import { useFavoritePokemonContext } from "@/hooks/use-favorite-pokemon-context";
 
 
 const FavoriteScreen = () => {
-  const {favoritePokemonId} = useFavoritePokemonContext();
+  const { favoritePokemonId } = useFavoritePokemonContext();
 
   if (!favoritePokemonId) {
     return (
-      <SimpleView>
-        <EmptyFavoritePokemonPlaceholder />
-      </SimpleView>
+      <EmptyFavoritePokemonPlaceholder
+        text={'Your favorite Pokémon will live here.\nGo to Pokémon list and pick one!'}
+      />
     );
   }
 
   return (
-    <SimpleView>
-      <Pokemon id={favoritePokemonId} showCloseButton={false} />
-    </SimpleView>
+    <Pokemon id={favoritePokemonId} showCloseButton={false} />
   );
 };
 

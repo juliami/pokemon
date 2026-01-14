@@ -25,10 +25,10 @@ const PokemonCamera = ({pokemonImageUri} : {pokemonImageUri: string}) => {
   const handleFacesDetection = (
     faces: Face[],
   ) => {
-    if (faces[0].bounds) {
-      setFaceBounds(faces[0].bounds)
+    if (faces.length && faces[0].bounds) {
+      setFaceBounds(faces[0].bounds);
     } else {
-      setFaceBounds(undefined)
+      setFaceBounds(undefined);
     }
   }
 
