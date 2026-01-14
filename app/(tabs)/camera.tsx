@@ -1,8 +1,7 @@
 import PokemonCamera from "@/components/pokemon-camera";
 import PokemonCameraPlaceholder from "@/components/pokemon-camera-placeholder";
-import { FavoritePokemonContext } from "@/context/favorite-pokemon";
+import { useFavoritePokemonContext } from "@/hooks/use-favorite-pokemon-context";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
-import { useContext } from "react";
 import { Button, StyleSheet, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -13,15 +12,8 @@ const CameraScreen = () => {
 
   const cameraPermissionStatus = useCameraPermission();
   const { hasPermission, requestPermission } = cameraPermissionStatus;
-  const favoritePokemonContext = useContext(FavoritePokemonContext);
 
-  if (!favoritePokemonContext) {
-    throw new Error(
-      "useContext(FavoritePokemonContext) must be inside a FavoritePokemonProvider",
-    );
-  }
-
-  const { favoritePokemonId } = favoritePokemonContext;
+  const  { favoritePokemonId }  = useFavoritePokemonContext();
   const { data } = useGetPokemonByIdQuery(Number(favoritePokemonId));
 
   const handlePress = () => {
