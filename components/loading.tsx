@@ -1,12 +1,11 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
-import { ThemedText } from "./themed-text";
-import { ThemedView } from "./themed-view";
+import { StyledText } from "./styled-text";
 
 const Loading = () => (
-  <ThemedView style={styles.container}>
-    <ThemedText>Loading...</ThemedText>
-  </ThemedView>
+  <View style={styles.container}>
+    <StyledText>Loading...</StyledText>
+  </View>
 );
 
 const styles = StyleSheet.create({

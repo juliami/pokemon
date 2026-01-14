@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import PokemonData from "@/components/pokemon-data";
 import PokemonImage from "@/components/pokemon-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
-import { ThemedText } from "@/components/themed-text";
+import { StyledText } from "@/components/styled-text";
 import { Gaps } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
@@ -11,7 +11,6 @@ import { capitalizeFirstLetter } from "@/utils/text";
 import { useNavigation } from "expo-router";
 import ToggleFavButton from "./fav-button";
 import Loading from "./loading";
-import { ThemedView } from "./themed-view";
 import CloseButton from "./ui/close-button";
 
 export default function Pokemon({
@@ -48,10 +47,10 @@ export default function Pokemon({
   } = pokemon;
 
   return (
-    <ThemedView style={[styles.container, { backgroundColor }]}>
+    <View style={[styles.container, { backgroundColor }]}>
       <View style={[styles.row, styles.header]}>
         <View style={styles.titleContainer}>
-          <ThemedText
+          <StyledText
             style={[
               styles.title,
               {
@@ -62,7 +61,7 @@ export default function Pokemon({
             ]}
           >
             {capitalizeFirstLetter(name)}
-          </ThemedText>
+          </StyledText>
           {showCloseButton && <CloseButton onPress={closeView} />}
         </View>
         <View style={styles.pillsContainer}>
@@ -87,7 +86,7 @@ export default function Pokemon({
           abilities={abilities}
         />
       </View>
-    </ThemedView>
+    </View>
   );
 }
 

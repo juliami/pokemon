@@ -2,7 +2,7 @@ import { BasicPokemonSpecies } from "@/types";
 import { Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
-import { ThemedText } from "./themed-text";
+import { StyledText } from "./styled-text";
 
 const PokemonListItem = ({
   name,
@@ -12,9 +12,9 @@ const PokemonListItem = ({
   return (
     <Link href={`/pokemon/${id}`}>
       <View style={styles.listItem}>
-        <ThemedText type="default">{index}</ThemedText>
-        <ThemedText>{name}</ThemedText>
-        <ThemedText style={styles.id}>#{id}</ThemedText>
+        <StyledText type="default">{index}</StyledText>
+        <StyledText>{name}</StyledText>
+        <StyledText style={styles.id}>#{id}</StyledText>
       </View>
     </Link>
   );
