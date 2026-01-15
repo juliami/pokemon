@@ -3,8 +3,8 @@ import { Pressable, StyleSheet, View } from "react-native";
 import { IconSymbol } from "./ui/icon-symbol";
 
 const ToggleFavButton = ({ id }: { id: string }) => {
-
-  const { favoritePokemonId, setFavoritePokemonId } = useFavoritePokemonContext();
+  const { favoritePokemonId, setFavoritePokemonId } =
+    useFavoritePokemonContext();
 
   const toggleFavoritePokemon = async () => {
     try {
