@@ -1,101 +1,104 @@
 import { Image } from "expo-image";
 import { useRef, useState } from "react";
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
+  Frame,
   Camera as VisionCamera,
   useCameraDevice,
-} from 'react-native-vision-camera';
+} from "react-native-vision-camera";
 import {
   Bounds,
   Camera,
   Face,
-  FrameFaceDetectionOptions
-} from 'react-native-vision-camera-face-detector';
+  FrameFaceDetectionOptions,
+} from "react-native-vision-camera-face-detector";
 
-const PokemonCamera = ({pokemonImageUri} : {pokemonImageUri: string}) => {
-  const ref = useRef<VisionCamera>(null)
-  const cameraDevice = useCameraDevice('front')
+const SCALE_DOWN_RATIO = 0.4;
 
+const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
+  const cameraRef = useRef<VisionCamera>(null);
+  const cameraDevice = useCameraDevice("front");
 
-  const faceDetectionOptions = useRef<FrameFaceDetectionOptions>({
-    // detection options
-  }).current
+  const platformSpecificScaling = Platform.OS === "ios" ? 0.45 : 1;
+
+  const faceDetectionOptions = useRef<FrameFaceDetectionOptions>({}).current;
   const [faceBound, setFaceBounds] = useState<Bounds | undefined>(undefined);
-
-  const handleFacesDetection = (
-    faces: Face[],
-  ) => {
-    if (faces.length && faces[0].bounds) {
-      setFaceBounds(faces[0].bounds);
-    } else {
-      setFaceBounds(undefined);
-    }
-  }
-
-  const getSize = () => {
-    if (!faceBound?.height || !faceBound.width) {
-      return {}
-    }
-    return ({ height: faceBound?.height * 0.4, width: faceBound?.width * 0.4 })
-  }
-
-  const getPosition = () => {
-    if (!faceBound?.x || !faceBound.y) {
-      return {}
-    }
-    return ({ left: faceBound?.x, top: faceBound?.y })
-  }
-
 
   if (!cameraDevice) {
     return null;
   }
 
+  const handleFacesDetection = (faces: Face[], frame: Frame) => {
+    if (faces.length && faces[0].bounds) {
+      setFaceBounds(faces[0].bounds);
+    } else {
+      setFaceBounds(undefined);
+    }
+  };
+
+  const getSize = () => {
+    if (!faceBound?.height || !faceBound.width) {
+      return {};
+    }
+    return {
+      height: faceBound?.height * platformSpecificScaling * SCALE_DOWN_RATIO,
+      width: faceBound?.width * platformSpecificScaling * SCALE_DOWN_RATIO,
+    };
+  };
+
+  const getPosition = () => {
+    if (!faceBound?.x || !faceBound.y) {
+      return {};
+    }
+    return { right: faceBound?.x, top: faceBound?.y };
+  };
+
   return (
     <SafeAreaView style={styles.container}>
+      {faceBound && (
+        <Image
+          source={pokemonImageUri}
+          style={[
+            styles.image,
+            {
+              height: getSize().height,
+              width: getSize().width,
+              top: getPosition().top,
+              right: getPosition().right,
+            },
+          ]}
+        />
+      )}
+
       <Camera
-        style={StyleSheet.absoluteFill}
+        style={StyleSheet.absoluteFillObject}
         device={cameraDevice}
         isActive={true}
         faceDetectionCallback={handleFacesDetection}
         faceDetectionOptions={faceDetectionOptions}
-        ref={ref}
+        ref={cameraRef}
+        photo={true}
       />
-      {faceBound && <Image
-        source={pokemonImageUri}
-        style={[styles.image, {
-          height: getSize().height,
-          width: getSize().width,
-          transform: [{ translateX: '-50%' }],
-          top: getPosition().top,
-          right: getPosition().left
-        },]}
-
-      />}
     </SafeAreaView>
-  )
-}
-
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    position: 'relative'
+    position: "relative",
+    height: "100%",
   },
-  cameraWrapper: {
-    position: 'relative'
+
+  capture: {
+    ...StyleSheet.absoluteFillObject,
   },
   image: {
-    width: 300,
-    height: 300,
-    position: 'absolute',
-    backgroundColor: 'rgba(0, 0, 0, 0)',
-
-
-  }
+    position: "absolute",
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    transform: [{ translateX: "-50%" }],
+    zIndex: 10,
+  },
 });
-
 
 export default PokemonCamera;

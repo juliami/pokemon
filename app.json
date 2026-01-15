@@ -26,9 +26,7 @@
       "predictiveBackGestureEnabled": false,
       "package": "com.juliamio.pokemon",
       "versionCode": 1,
-      "permissions": [
-        "CAMERA"
-      ]
+      "permissions": ["CAMERA"]
     },
     "web": {
       "output": "static",
@@ -54,15 +52,17 @@
           "cameraPermissionText": "Pokemon needs access to your Camera."
         }
       ],
-      ["expo-build-properties", {
+      [
+        "expo-build-properties",
+        {
           "android": {
             "minSdkVersion": 34
-          },
-          "ios": {
-            "deploymentTarget": "26.0"
           }
+          // "ios": {
+          //   "deploymentTarget": "26.0"
+          // }
         }
-    ]
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

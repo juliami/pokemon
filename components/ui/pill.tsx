@@ -30,8 +30,8 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     letterSpacing: 0.1,
     fontWeight: 600,
-    alignSelf: 'stretch',
-    textAlign: 'center',
+    alignSelf: "stretch",
+    textAlign: "center",
   },
 });
 

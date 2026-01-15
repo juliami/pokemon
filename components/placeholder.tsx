@@ -3,21 +3,29 @@ import { StyleSheet, View } from "react-native";
 
 import { StyledText } from "@/components/styled-text";
 
-interface Props { 
+interface Props {
   text: string;
-  image?: string
+  image?: string;
   children?: React.ReactNode;
 }
-export default function EmptyFavoritePokemonPlaceholder({text, image, children} : Props) {
-  const showCameraImage = image === 'camera'
+export default function EmptyFavoritePokemonPlaceholder({
+  text,
+  image,
+  children,
+}: Props) {
+  const showCameraImage = image === "camera";
   return (
     <View style={styles.container}>
       <Image
-        source={showCameraImage ?  require("@/assets/images/pokemon-camera.webp") : require("@/assets/images/sad-pokemon.webp")}
+        source={
+          showCameraImage
+            ? require("@/assets/images/pokemon-camera.webp")
+            : require("@/assets/images/sad-pokemon.webp")
+        }
         style={styles.image}
       />
-      <StyledText style={{ textAlign: "center", width: '100%', height: 80 }}>
-       {text}
+      <StyledText style={{ textAlign: "center", width: "100%", height: 80 }}>
+        {text}
       </StyledText>
       {children}
     </View>

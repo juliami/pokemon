@@ -3,12 +3,9 @@ import PokemonCamera from "@/components/pokemon-camera";
 import { useFavoritePokemonContext } from "@/hooks/use-favorite-pokemon-context";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
 import { Button, StyleSheet } from "react-native";
-import {
-  useCameraPermission
-} from 'react-native-vision-camera';
+import { useCameraPermission } from "react-native-vision-camera";
 
 const CameraScreen = () => {
-
   const cameraPermissionStatus = useCameraPermission();
   const { hasPermission, requestPermission } = cameraPermissionStatus;
 
@@ -17,44 +14,43 @@ const CameraScreen = () => {
 
   if (!hasPermission) {
     return (
-        <Placeholder
-          text={'Camera access needed'}
-          image='camera'
-        >
-          <Button onPress={requestPermission} title="Request access" />
-        </Placeholder>
-
-    )
+      <Placeholder text={"Camera access needed"} image="camera">
+        <Button onPress={requestPermission} title="Request access" />
+      </Placeholder>
+    );
   }
 
   if (!favoritePokemonId || !data) {
     return (
       <Placeholder
-        text={'Ready for the Pokémon Camera?\nChoose your favorite Pokémon and start.'}
-        image='camera'
+        text={
+          "Ready for the Pokémon Camera?\nChoose your favorite Pokémon and start."
+        }
+        image="camera"
       />
-    )
+    );
   }
 
   if (favoritePokemonId && data) {
     const { imageUri } = data;
-    return (<PokemonCamera pokemonImageUri={imageUri} />
-    )
+    return <PokemonCamera pokemonImageUri={imageUri} />;
   }
 
-  return (<Placeholder
-    text={'Ready for the Pokémon Camera?\nChoose your favorite Pokémon and start.'}
-    image='camera'
-  />);
+  return (
+    <Placeholder
+      text={
+        "Ready for the Pokémon Camera?\nChoose your favorite Pokémon and start."
+      }
+      image="camera"
+    />
+  );
 };
-
-
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
-    height: '100%',
-    position: 'relative'
+    width: "100%",
+    height: "100%",
+    position: "relative",
   },
 });
 
