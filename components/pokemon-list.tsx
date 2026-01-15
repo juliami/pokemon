@@ -1,6 +1,7 @@
+import { PokemonColorKey } from "@/constants/theme";
 import { useGetPokemonsQuery } from "@/hooks/use-get-pokemons-query";
 import { useCallback, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
 import PokemonListItem from "./pokemon-list-item";
 import { StyledText } from "./styled-text";
 
@@ -41,33 +42,28 @@ const PokemonList = () => {
   if (!pokemons) return <StyledText>No pokemons found</StyledText>;
 
   return (
-    <>
-      <FlatList
-        data={pokemons}
-        renderItem={({ item, index }) => (
-          <PokemonListItem name={item.name} id={item.id} index={index} />
-        )}
-        keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
-        onEndReached={fetchNextPage}
-        onRefresh={onRefresh}
-        refreshing={refreshing}
-        contentContainerStyle={[styles.list, refreshing && { opacity: 0.3 }]}
-      />
-    </>
+    <FlatList
+      data={pokemons}
+      renderItem={({ item }) => (
+        <PokemonListItem
+          name={item.name}
+          id={item.id}
+          color={item.pokemon_v2_pokemoncolor?.name as PokemonColorKey}
+          imageUri={
+            item.pokemon_v2_pokemons[0].pokemon_v2_pokemonsprites[0].sprites
+              .other["official-artwork"].front_default
+          }
+        />
+      )}
+      keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
+      onEndReached={fetchNextPage}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
+      numColumns={2}
+      contentContainerStyle={[refreshing && { opacity: 0.3 }]}
+      testID="pokemon-list"
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  list: {
-    padding: 32,
-  },
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-    justifyContent: "center",
-  },
-});
 
 export default PokemonList;
