@@ -1,8 +1,4 @@
 import { PokemonColorKey } from "@/constants/theme";
-import { GetAllPokemonSpeciesQuery } from "./gql/graphql";
-
-export type BasicPokemonSpecies =
-  GetAllPokemonSpeciesQuery["pokemon_v2_pokemonspecies"][number];
 
 export type DetailedPokemonSpecies = {
   name: string;
@@ -16,3 +12,8 @@ export type DetailedPokemonSpecies = {
   genus: string;
   flavorText: string;
 };
+
+export type BasicPokemonSpecies = Pick<
+  DetailedPokemonSpecies,
+  "name" | "color" | "id" | "imageUri"
+>;
