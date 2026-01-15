@@ -8,6 +8,10 @@ type Props = {
   shadowStyles?: ImageStyle;
 };
 
+const blurhash =
+  '|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[';
+
+
 const PokemonImage = ({
   imageUri,
   contentPosition,
@@ -17,6 +21,7 @@ const PokemonImage = ({
   <>
     <Image
       source={{ uri: imageUri }}
+      placeholder={require("@/assets/images/placeholder-pokeball.png")}
       style={[styles.imageShadow, shadowStyles]}
       contentPosition={contentPosition}
       tintColor={"white"}
@@ -25,6 +30,7 @@ const PokemonImage = ({
     <Image
       source={{ uri: imageUri }}
       style={[styles.image, imageStyles]}
+      placeholder={require("@/assets/images/placeholder-pokeball.png")}
       contentPosition={contentPosition}
       contentFit={"contain"}
     />

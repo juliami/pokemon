@@ -2,12 +2,13 @@ import { PokemonColorKey } from "@/constants/theme";
 import { useGetPokemonsQuery } from "@/hooks/use-get-pokemons-query";
 import { useCallback, useState } from "react";
 import { FlatList } from "react-native";
+import Loading from "./loading";
 import PokemonListItem from "./pokemon-list-item";
 import { StyledText } from "./styled-text";
 
 const PokemonList = () => {
   const [refreshing, setRefreshing] = useState(false);
-  const { data, error, fetchMore, refetch } = useGetPokemonsQuery();
+  const { data, error, fetchMore, refetch, loading } = useGetPokemonsQuery();
 
   const fetchNextPage = useCallback(() => {
     if (!data?.pokemon_v2_pokemonspecies) return;
@@ -39,7 +40,7 @@ const PokemonList = () => {
   const pokemons = data?.pokemon_v2_pokemonspecies;
 
   if (error) return <StyledText>Error: {error.message}</StyledText>;
-  if (!pokemons) return <StyledText>No pokemons found</StyledText>;
+  if (!pokemons && loading) return <Loading text='Catching them all'/>;
 
   return (
     <FlatList
