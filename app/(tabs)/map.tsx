@@ -18,7 +18,7 @@ const MapScreen = () => {
   const snapPoints = useMemo(() => ["5%", "40%"], []);
 
   const [selectedPokemonId, setSelectedPokemonId] = useState<number | null>(
-    null
+    null,
   );
 
   const handleMapLongPress = (event: {
@@ -35,9 +35,9 @@ const MapScreen = () => {
   };
 
   const handleMarkerDeselection = () => {
-             selectedMarkerRef.current?.hideCallout();
-            selectedMarkerRef.current = null;
-            setSelectedPokemonId(null);
+    selectedMarkerRef.current?.hideCallout();
+    selectedMarkerRef.current = null;
+    setSelectedPokemonId(null);
   };
 
   const closeBottomSheet = () => {
