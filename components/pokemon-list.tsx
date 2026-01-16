@@ -44,7 +44,6 @@ const PokemonList = () => {
   if (!pokemons && loading) return <Loading text="Catching them all" />;
 
   return (
-    <>
       <FlatList
         data={pokemons}
         renderItem={({ item }) => (
@@ -60,20 +59,20 @@ const PokemonList = () => {
         )}
         keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
         onEndReached={fetchNextPage}
-        onEndReachedThreshold={10}
+        onEndReachedThreshold={0.3}
         onRefresh={onRefresh}
         refreshing={refreshing}
         windowSize={5}
-        initialNumToRender={8}
-        maxToRenderPerBatch={8}
+        initialNumToRender={20}
+        maxToRenderPerBatch={20}
         contentContainerStyle={[refreshing && { opacity: 0.3 }]}
+        removeClippedSubviews={true}
         testID="pokemon-list"
-         getItemLayout={(data, index) => (
+         getItemLayout={(_data, index) => (
             {length: 200, offset: 200 * index, index}
           )}
         ListFooterComponent={loading ? <ListItemActivityIndicator /> : null}
       />
-    </>
   );
 };
 

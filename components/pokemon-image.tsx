@@ -24,6 +24,7 @@ const PokemonImage = ({
       contentPosition={contentPosition}
       tintColor={"white"}
       contentFit={"contain"}
+      cachePolicy={"memory-disk"}
     />
     <Image
       source={{ uri: imageUri }}
