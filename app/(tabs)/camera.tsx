@@ -20,17 +20,6 @@ const CameraScreen = () => {
     );
   }
 
-  if (!favoritePokemonId || !data) {
-    return (
-      <Placeholder
-        text={
-          "Ready for the Pokémon Camera?\nChoose your favorite Pokémon and start."
-        }
-        image="camera"
-      />
-    );
-  }
-
   if (favoritePokemonId && data) {
     const { imageUri } = data;
     return <PokemonCamera pokemonImageUri={imageUri} />;
