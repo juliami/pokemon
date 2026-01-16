@@ -12,7 +12,6 @@ type Props = {
 const PokemonTitle = ({ color, name, textStyles }: Props) => (
   <StyledText
     style={[
-      ,
       {
         textShadowColor: PokemonColors[color].darker,
         textShadowOffset: { width: 2, height: 2 },

@@ -31,6 +31,7 @@ const PokemonImage = ({
       placeholder={require("@/assets/images/placeholder-pokeball.png")}
       contentPosition={contentPosition}
       contentFit={"contain"}
+      cachePolicy={"memory-disk"}
     />
   </>
 );

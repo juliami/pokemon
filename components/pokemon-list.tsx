@@ -68,6 +68,9 @@ const PokemonList = () => {
         maxToRenderPerBatch={8}
         contentContainerStyle={[refreshing && { opacity: 0.3 }]}
         testID="pokemon-list"
+         getItemLayout={(data, index) => (
+            {length: 200, offset: 200 * index, index}
+          )}
         ListFooterComponent={loading ? <ListItemActivityIndicator /> : null}
       />
     </>

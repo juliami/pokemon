@@ -4,9 +4,9 @@ import { StyleSheet, View } from "react-native";
 
 import { Gaps, Radius } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
+import { capitalizeFirstLetter } from "@/utils/text";
 import { memo, useMemo } from "react";
 import PokemonImage from "./pokemon-image";
-import PokemonTitle from "./pokemon-title";
 import { StyledText } from "./styled-text";
 
 const PokemonListItem = ({
@@ -40,7 +40,7 @@ const PokemonListItem = ({
           />
         </View>
         <View style={styles.dataContainer}>
-          <PokemonTitle textStyles={styles.title} name={name} color={color} />
+          <StyledText style={styles.title}>{capitalizeFirstLetter(name)}</StyledText>
         </View>
         <View>
           <StyledText style={styles.id}>#{id}</StyledText>
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: Radius.small,
     gap: Gaps.medium,
+    height: 200,
     overflow: "hidden",
   },
   id: {
@@ -81,9 +82,10 @@ const styles = StyleSheet.create({
     flexBasis: "30%",
   },
   dataContainer: {
-    paddingBlock: Gaps.xLarge,
     boxSizing: "border-box",
+    height: 200,
     flexGrow: 1,
+    justifyContent: 'center'
   },
   image: {
     width: "110%",
