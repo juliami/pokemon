@@ -1,11 +1,12 @@
 import Pokemon from "@/components/pokemon";
+import PokemonMarker from "@/components/pokemon-marker";
 import { useMapMarkersContext } from "@/hooks/use-map-markers-context";
 import { getRandomPokemonID } from "@/utils/get-random-pokemon-id";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { useMemo, useRef, useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import MapView, { LatLng, Marker } from "react-native-maps";
+import MapView, { LatLng } from "react-native-maps";
 
 interface PokemonMarker extends LatLng {
   pokemonId: number;
@@ -42,13 +43,14 @@ const MapScreen = () => {
         <MapView
           style={{ flex: 1 }}
           onLongPress={handleMapLongPress}
-          onPress={(e) => closeBottomSheet(e)}
+          onPress={closeBottomSheet}
         >
           {markers.map((marker, index) => (
-            <Marker
+            <PokemonMarker
+              pokemonId={marker.pokemonId}
               key={index}
-              coordinate={marker}
-              onSelect={handleMarkerSelect}
+              coordinate={{latitude: marker.latitude, longitude: marker.longitude}}
+              onSelect={()=>handleMarkerSelect(marker)}
               stopPropagation={true}
             />
           ))}
