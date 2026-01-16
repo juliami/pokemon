@@ -1,4 +1,5 @@
 import { Image } from "expo-image";
+import { memo } from "react";
 import { ImageStyle, StyleSheet } from "react-native";
 
 type Props = {
@@ -8,8 +9,6 @@ type Props = {
   shadowStyles?: ImageStyle;
 };
 
-const blurhash =
-  "|rF?hV%2WCj[ayj[a|j[az_NaeWBj@ayfRayfQfQM{M|azj[azf6fQfQfQIpWXofj[ayj[j[fQayWCoeoeaya}j[ayfQa{oLj?j[WVj[ayayj[fQoff7azayj[ayj[j[ayofayayayj[fQj[ayayj[ayfjj[j[ayjuayj[";
 
 const PokemonImage = ({
   imageUri,
@@ -53,4 +52,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PokemonImage;
+export default memo(PokemonImage);
