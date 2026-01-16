@@ -2,7 +2,7 @@ import Placeholder from "@/components/placeholder";
 import PokemonCamera from "@/components/pokemon-camera";
 import { useFavoritePokemonContext } from "@/hooks/use-favorite-pokemon-context";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
-import { Button, StyleSheet } from "react-native";
+import { Button } from "react-native";
 import { useCameraPermission } from "react-native-vision-camera";
 
 const CameraScreen = () => {
@@ -45,13 +45,5 @@ const CameraScreen = () => {
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    height: "100%",
-    position: "relative",
-  },
-});
 
 export default CameraScreen;
