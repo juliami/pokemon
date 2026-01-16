@@ -2,13 +2,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useEffect, useState } from "react";
 import { LatLng } from "react-native-maps";
 
-interface PokemonMarker extends LatLng {
+export interface PokemonMarkerType extends LatLng {
   pokemonId: number;
 }
 
 interface MapMarkersContextProps {
-  markers: PokemonMarker[];
-  addMarker: (marker: PokemonMarker) => void;
+  markers: PokemonMarkerType[];
+  addMarker: (marker: PokemonMarkerType) => void;
   removeMarker: (index: number) => void;
 }
 
@@ -23,7 +23,7 @@ const MAP_MARKERS_KEY = "pokemon-markers";
 export const MapMarkersProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [markers, setMarkers] = useState<PokemonMarker[]>([]);
+  const [markers, setMarkers] = useState<PokemonMarkerType[]>([]);
 
   useEffect(() => {
     (async () => {
@@ -42,7 +42,7 @@ export const MapMarkersProvider: React.FC<{ children: React.ReactNode }> = ({
     AsyncStorage.setItem(MAP_MARKERS_KEY, JSON.stringify(markers));
   }, [markers]);
 
-  const addMarker = (marker: PokemonMarker) => {
+  const addMarker = (marker: PokemonMarkerType) => {
     setMarkers((prev) => [...prev, marker]);
   };
 
