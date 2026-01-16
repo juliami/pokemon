@@ -1,6 +1,6 @@
 import { Image } from "expo-image";
 import { useRef, useState } from "react";
-import { Platform, StyleSheet } from "react-native";
+import { Dimensions, Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Frame,
@@ -10,11 +10,13 @@ import {
 import {
   Bounds,
   Camera,
-  Face,
-  FrameFaceDetectionOptions,
+  Face
 } from "react-native-vision-camera-face-detector";
 
+
 const SCALE_DOWN_RATIO = 0.4;
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
   const cameraRef = useRef<VisionCamera>(null);
@@ -22,7 +24,7 @@ const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
 
   const platformSpecificScaling = Platform.OS === "ios" ? 0.45 : 1;
 
-  const faceDetectionOptions = useRef<FrameFaceDetectionOptions>({}).current;
+  // const faceDetectionOptions = useRef<FrameFaceDetectionOptions>({}).current;
   const [faceBound, setFaceBounds] = useState<Bounds | undefined>(undefined);
 
   if (!cameraDevice) {
@@ -42,8 +44,8 @@ const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
       return {};
     }
     return {
-      height: faceBound?.height * platformSpecificScaling * SCALE_DOWN_RATIO,
-      width: faceBound?.width * platformSpecificScaling * SCALE_DOWN_RATIO,
+      height: faceBound?.height * SCALE_DOWN_RATIO,
+      width: faceBound?.width * SCALE_DOWN_RATIO,
     };
   };
 
@@ -53,6 +55,8 @@ const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
     }
     return { right: faceBound?.x, top: faceBound?.y };
   };
+  // console.log({windowWidth})
+  console.log({faceBound})
 
   return (
     <SafeAreaView style={styles.container}>
@@ -65,7 +69,7 @@ const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
               height: getSize().height,
               width: getSize().width,
               top: getPosition().top,
-              right: getPosition().right,
+               right: getPosition().right,
             },
           ]}
         />
@@ -76,7 +80,12 @@ const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
         device={cameraDevice}
         isActive={true}
         faceDetectionCallback={handleFacesDetection}
-        faceDetectionOptions={faceDetectionOptions}
+        faceDetectionOptions={{
+          autoMode: true,
+          windowHeight,
+          windowWidth
+          
+        }}
         ref={cameraRef}
         photo={true}
       />
@@ -96,7 +105,7 @@ const styles = StyleSheet.create({
   image: {
     position: "absolute",
     backgroundColor: "rgba(0, 0, 0, 0)",
-    transform: [{ translateX: "-50%" }],
+    transform: [{ translateX: "-50%"}, {translateY: "-50%"}],
     zIndex: 10,
   },
 });
