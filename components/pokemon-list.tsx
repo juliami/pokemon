@@ -5,6 +5,7 @@ import { FlatList } from "react-native";
 import Loading from "./loading";
 import PokemonListItem from "./pokemon-list-item";
 import { StyledText } from "./styled-text";
+import ListItemActivityIndicator from "./ui/list-item-activity-indicator";
 
 const PokemonList = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -40,30 +41,36 @@ const PokemonList = () => {
   const pokemons = data?.pokemon_v2_pokemonspecies;
 
   if (error) return <StyledText>Error: {error.message}</StyledText>;
-  if (!pokemons && loading) return <Loading text='Catching them all'/>;
+  if (!pokemons && loading) return <Loading text="Catching them all" />;
 
   return (
-    <FlatList
-      data={pokemons}
-      renderItem={({ item }) => (
-        <PokemonListItem
-          name={item.name}
-          id={item.id}
-          color={item.pokemon_v2_pokemoncolor?.name as PokemonColorKey}
-          imageUri={
-            item.pokemon_v2_pokemons[0].pokemon_v2_pokemonsprites[0].sprites
-              .other["official-artwork"].front_default
-          }
-        />
-      )}
-      keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
-      onEndReached={fetchNextPage}
-      onRefresh={onRefresh}
-      refreshing={refreshing}
-      numColumns={2}
-      contentContainerStyle={[refreshing && { opacity: 0.3 }]}
-      testID="pokemon-list"
-    />
+    <>
+      <FlatList
+        data={pokemons}
+        renderItem={({ item }) => (
+          <PokemonListItem
+            name={item.name}
+            id={item.id}
+            color={item.pokemon_v2_pokemoncolor?.name as PokemonColorKey}
+            imageUri={
+              item.pokemon_v2_pokemons[0].pokemon_v2_pokemonsprites[0].sprites
+                .other["official-artwork"].front_default
+            }
+          />
+        )}
+        keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={10}
+        onRefresh={onRefresh}
+        refreshing={refreshing}
+        windowSize={5}
+        initialNumToRender={8}
+        maxToRenderPerBatch={8}
+        contentContainerStyle={[refreshing && { opacity: 0.3 }]}
+        testID="pokemon-list"
+        ListFooterComponent={loading ? <ListItemActivityIndicator /> : null}
+      />
+    </>
   );
 };
 

@@ -25,7 +25,7 @@ export default function Pokemon({
   const closeView = () => navigation.goBack();
 
   if (loading) {
-    return <Loading text="Waiting for the wild Pokemon to appear"/>;
+    return <Loading text="Waiting for the wild Pokemon to appear" />;
   }
   if (!pokemon) {
     closeView();

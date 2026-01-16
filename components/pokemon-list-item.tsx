@@ -1,9 +1,10 @@
 import { BasicPokemonSpecies } from "@/types";
-import { Link } from "expo-router";
+import { Href, Link } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 import { Gaps, Radius } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
+import { memo, useMemo } from "react";
 import PokemonImage from "./pokemon-image";
 import PokemonTitle from "./pokemon-title";
 import { StyledText } from "./styled-text";
@@ -14,10 +15,22 @@ const PokemonListItem = ({
   color,
   imageUri,
 }: BasicPokemonSpecies) => {
-  const backgroundColor = PokemonColors[color].default;
+  const cardStyle = useMemo(
+    () => [{ backgroundColor: PokemonColors[color].default }, styles.card],
+    [color],
+  );
+
+  const href = useMemo<Href>(
+    () => ({
+      pathname: "/pokemon/[id]",
+      params: { id },
+    }),
+    [id],
+  );
+
   return (
-    <Link href={`/pokemon/${id}`} style={styles.listItem} testID="pokemon-link">
-      <View style={[{ backgroundColor }, styles.card]}>
+    <Link href={href} style={styles.listItem} testID="pokemon-link">
+      <View style={cardStyle}>
         <View style={styles.imageContainer}>
           <PokemonImage
             imageUri={imageUri}
@@ -50,7 +63,6 @@ const styles = StyleSheet.create({
     borderRadius: Radius.small,
     gap: Gaps.medium,
     overflow: "hidden",
-    boxShadow: "2px 4px 3px -2px rgb(0 0 0 / 21%)",
   },
   id: {
     color: "#fff",
@@ -84,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default PokemonListItem;
+export default memo(PokemonListItem);

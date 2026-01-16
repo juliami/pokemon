@@ -3,9 +3,9 @@ import { Colors } from "@/constants/theme";
 import { ActivityIndicator, StyleSheet, View } from "react-native";
 import { StyledText } from "./styled-text";
 
-const Loading = ({text}: {text: string}) => (
+const Loading = ({ text }: { text: string }) => (
   <View style={styles.container}>
-    <ActivityIndicator size="large"  color={Colors.tint}/>
+    <ActivityIndicator size="large" color={Colors.tint} />
     <StyledText style={styles.text}>{text}</StyledText>
   </View>
 );
@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
   },
   text: {
     marginTop: Gaps.small,
-    color: Colors.icon
-  }
+    color: Colors.icon,
+  },
 });
 
 export default Loading;
