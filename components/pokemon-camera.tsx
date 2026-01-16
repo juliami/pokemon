@@ -1,30 +1,22 @@
 import { Image } from "expo-image";
 import { useRef, useState } from "react";
-import { Dimensions, Platform, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Frame,
   Camera as VisionCamera,
   useCameraDevice,
 } from "react-native-vision-camera";
-import {
-  Bounds,
-  Camera,
-  Face
-} from "react-native-vision-camera-face-detector";
-
+import { Bounds, Camera, Face } from "react-native-vision-camera-face-detector";
 
 const SCALE_DOWN_RATIO = 0.4;
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
   const cameraRef = useRef<VisionCamera>(null);
   const cameraDevice = useCameraDevice("front");
 
-  const platformSpecificScaling = Platform.OS === "ios" ? 0.45 : 1;
-
-  // const faceDetectionOptions = useRef<FrameFaceDetectionOptions>({}).current;
   const [faceBound, setFaceBounds] = useState<Bounds | undefined>(undefined);
 
   if (!cameraDevice) {
@@ -55,8 +47,6 @@ const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
     }
     return { right: faceBound?.x, top: faceBound?.y };
   };
-  // console.log({windowWidth})
-  console.log({faceBound})
 
   return (
     <SafeAreaView style={styles.container}>
@@ -69,7 +59,7 @@ const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
               height: getSize().height,
               width: getSize().width,
               top: getPosition().top,
-               right: getPosition().right,
+              right: getPosition().right,
             },
           ]}
         />
@@ -83,8 +73,7 @@ const PokemonCamera = ({ pokemonImageUri }: { pokemonImageUri: string }) => {
         faceDetectionOptions={{
           autoMode: true,
           windowHeight,
-          windowWidth
-          
+          windowWidth,
         }}
         ref={cameraRef}
         photo={true}
@@ -105,7 +94,7 @@ const styles = StyleSheet.create({
   image: {
     position: "absolute",
     backgroundColor: "rgba(0, 0, 0, 0)",
-    transform: [{ translateX: "-50%"}, {translateY: "-50%"}],
+    transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
     zIndex: 10,
   },
 });
