@@ -1,5 +1,5 @@
 import { SimpleView } from "@/components/simple-view";
-import AnimatedText from '@/modules/animated-text';
+import AnimatedText from "@/modules/animated-text";
 import { Text } from "react-native";
 
 const Stats = () => (

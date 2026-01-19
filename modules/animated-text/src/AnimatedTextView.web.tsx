@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 
-import { AnimatedTextViewProps } from './AnimatedText.types';
+import { AnimatedTextViewProps } from "./AnimatedText.types";
 
 export default function AnimatedTextView(props: AnimatedTextViewProps) {
   return (
