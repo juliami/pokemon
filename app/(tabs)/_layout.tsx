@@ -37,7 +37,7 @@ export default function TabLayout() {
         options={{
           title: "Pokemon Stats",
           tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="heart" color={color} />
+            <IconSymbol size={28} name="chart.bar" color={color} />
           ),
         }}
       />
