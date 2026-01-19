@@ -1,16 +1,18 @@
 import Pokemon from "@/components/pokemon";
 import PokemonMarker from "@/components/pokemon-marker";
+import { Gaps } from "@/constants/layout";
+import { Colors } from "@/constants/theme";
 import { PokemonMarkerType } from "@/context/map-markers";
 import { useMapMarkersContext } from "@/hooks/use-map-markers-context";
 import { getRandomPokemonID } from "@/utils/get-random-pokemon-id";
 import BottomSheet, { BottomSheetView } from "@gorhom/bottom-sheet";
 import React, { useMemo, useRef, useState } from "react";
-import { StyleSheet, Text } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import MapView, { LatLng, Marker } from "react-native-maps";
 
 const MapScreen = () => {
-  const { markers, addMarker } = useMapMarkersContext();
+  const { markers, addMarker, removeMarker } = useMapMarkersContext();
 
   const sheetRef = useRef<BottomSheet>(null);
   const selectedMarkerRef = useRef<InstanceType<typeof Marker> | null>(null);
@@ -44,6 +46,16 @@ const MapScreen = () => {
     sheetRef.current?.close();
   };
 
+  const handleRemoveMarker = () => {
+    console.log("remo");
+    if (!selectedPokemonId) return;
+
+    removeMarker(selectedPokemonId);
+    selectedMarkerRef.current?.hideCallout();
+    selectedMarkerRef.current = null;
+    setSelectedPokemonId(null);
+    sheetRef.current?.close();
+  };
   return (
     <>
       <GestureHandlerRootView style={styles.container}>
@@ -80,11 +92,27 @@ const MapScreen = () => {
         >
           <BottomSheetView style={styles.sheetContent}>
             {selectedPokemonId ? (
-              <Pokemon
-                id={selectedPokemonId.toString()}
-                showCloseButton={false}
-                showPokemonData={false}
-              />
+              <>
+                <Pokemon
+                  id={selectedPokemonId.toString()}
+                  showCloseButton={false}
+                  showPokemonData={false}
+                />
+                <View
+                  style={{
+                    zIndex: 10,
+                    alignSelf: "flex-end",
+                    marginTop: Gaps.medium,
+                    marginRight: Gaps.small,
+                  }}
+                >
+                  <Button
+                    onPress={handleRemoveMarker}
+                    title="Remove"
+                    color={Colors.tabIconDefault}
+                  />
+                </View>
+              </>
             ) : (
               <Text style={styles.title}>No Pokémon selected</Text>
             )}
