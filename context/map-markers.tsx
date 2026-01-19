@@ -1,0 +1,60 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useEffect, useState } from "react";
+import { LatLng } from "react-native-maps";
+
+export interface PokemonMarkerType extends LatLng {
+  pokemonId: number;
+}
+
+interface MapMarkersContextProps {
+  markers: PokemonMarkerType[];
+  addMarker: (marker: PokemonMarkerType) => void;
+  removeMarker: (index: number) => void;
+}
+
+export const MapMarkersContext = createContext<MapMarkersContextProps>({
+  markers: [],
+  addMarker: () => {},
+  removeMarker: () => {},
+});
+
+const MAP_MARKERS_KEY = "pokemon-markers";
+
+export const MapMarkersProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
+  const [markers, setMarkers] = useState<PokemonMarkerType[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const stored = await AsyncStorage.getItem(MAP_MARKERS_KEY);
+      if (stored) {
+        try {
+          setMarkers(JSON.parse(stored));
+        } catch (e) {
+          console.warn("Failed to parse stored markers:", e);
+        }
+      }
+    })();
+  }, []);
+
+  useEffect(() => {
+    AsyncStorage.setItem(MAP_MARKERS_KEY, JSON.stringify(markers));
+  }, [markers]);
+
+  const addMarker = (marker: PokemonMarkerType) => {
+    setMarkers((prev) => [...prev, marker]);
+  };
+
+  const removeMarker = (pokemonId: number) => {
+    setMarkers((prev) =>
+      prev.filter((marker) => marker.pokemonId !== pokemonId),
+    );
+  };
+
+  return (
+    <MapMarkersContext.Provider value={{ markers, addMarker, removeMarker }}>
+      {children}
+    </MapMarkersContext.Provider>
+  );
+};
