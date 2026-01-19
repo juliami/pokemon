@@ -3,14 +3,13 @@ import { StyleSheet, View } from "react-native";
 import PokemonData from "@/components/pokemon-data";
 import PokemonImage from "@/components/pokemon-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
-import { StyledText } from "@/components/styled-text";
 import { Gaps } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
-import { capitalizeFirstLetter } from "@/utils/text";
 import { useNavigation } from "expo-router";
 import ToggleFavButton from "./fav-button";
 import Loading from "./loading";
+import PokemonTitle from "./pokemon-title";
 import CloseButton from "./ui/close-button";
 
 export default function Pokemon({
@@ -26,7 +25,7 @@ export default function Pokemon({
   const closeView = () => navigation.goBack();
 
   if (loading) {
-    return <Loading />;
+    return <Loading text="Waiting for the wild Pokemon to appear" />;
   }
   if (!pokemon) {
     closeView();
@@ -50,18 +49,8 @@ export default function Pokemon({
     <View style={[styles.container, { backgroundColor }]}>
       <View style={[styles.row, styles.header]}>
         <View style={styles.titleContainer}>
-          <StyledText
-            style={[
-              styles.title,
-              {
-                textShadowColor: PokemonColors[color].darker,
-                textShadowOffset: { width: 2, height: 2 },
-                textShadowRadius: 2,
-              },
-            ]}
-          >
-            {capitalizeFirstLetter(name)}
-          </StyledText>
+          <PokemonTitle textStyles={styles.title} name={name} color={color} />
+
           {showCloseButton && <CloseButton onPress={closeView} />}
         </View>
         <View style={styles.pillsContainer}>
@@ -70,7 +59,7 @@ export default function Pokemon({
             backgroundColor={PokemonColors[color].darker}
           />
         </View>
-        <PokemonImage imageUri={imageUri} />
+        <PokemonImage imageUri={imageUri} contentPosition="bottom" />
         <View style={styles.bottomIconContainer}>
           <ToggleFavButton id={id.toString()} />
         </View>
