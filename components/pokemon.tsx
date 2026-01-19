@@ -16,9 +16,11 @@ import CloseButton from "./ui/close-button";
 export default function Pokemon({
   id,
   showCloseButton,
+  showPokemonData = true,
 }: {
   id: string;
   showCloseButton: boolean;
+  showPokemonData?: boolean;
 }) {
   const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
   const navigation = useNavigation();
@@ -77,14 +79,16 @@ export default function Pokemon({
       </View>
 
       <View style={styles.row}>
-        <PokemonData
-          genus={genus}
-          flavorText={flavorText}
-          height={height}
-          weight={weight}
-          color={color}
-          abilities={abilities}
-        />
+        {showPokemonData && (
+          <PokemonData
+            genus={genus}
+            flavorText={flavorText}
+            height={height}
+            weight={weight}
+            color={color}
+            abilities={abilities}
+          />
+        )}
       </View>
     </View>
   );

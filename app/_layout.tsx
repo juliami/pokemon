@@ -6,6 +6,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 
 import client from "@/api/client";
 import { FavoritePokemonProvider } from "@/context/favorite-pokemon";
+import { MapMarkersProvider } from "@/context/map-markers";
 import { ApolloProvider } from "@apollo/client/react";
 
 export const unstable_settings = {
@@ -16,19 +17,21 @@ export default function RootLayout() {
   return (
     <ApolloProvider client={client}>
       <FavoritePokemonProvider>
-        <SafeAreaProvider>
-          <Stack>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen
-              name="pokemon/[id]"
-              options={{
-                headerShown: Platform.OS === "web",
-                presentation: "modal",
-              }}
-            />
-          </Stack>
-          <StatusBar style="auto" />
-        </SafeAreaProvider>
+        <MapMarkersProvider>
+          <SafeAreaProvider>
+            <Stack>
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="pokemon/[id]"
+                options={{
+                  headerShown: Platform.OS === "web",
+                  presentation: "modal",
+                }}
+              />
+            </Stack>
+            <StatusBar style="auto" />
+          </SafeAreaProvider>
+        </MapMarkersProvider>
       </FavoritePokemonProvider>
     </ApolloProvider>
   );

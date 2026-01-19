@@ -25,6 +25,7 @@ const MAPPING = {
   heart: "favorite-outline",
   "list.bullet": "list",
   xmark: "close",
+  map: "map",
 } as IconMapping;
 
 /**
