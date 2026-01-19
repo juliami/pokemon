@@ -1,6 +1,6 @@
-import { NativeModule, requireNativeModule } from 'expo';
+import { NativeModule, requireNativeModule } from "expo";
 
-import { AnimatedTextModuleEvents } from './AnimatedText.types';
+import { AnimatedTextModuleEvents } from "./AnimatedText.types";
 
 declare class AnimatedTextModule extends NativeModule<AnimatedTextModuleEvents> {
   PI: number;
@@ -9,4 +9,4 @@ declare class AnimatedTextModule extends NativeModule<AnimatedTextModuleEvents> 
 }
 
 // This call loads the native module object from the JSI.
-export default requireNativeModule<AnimatedTextModule>('AnimatedText');
+export default requireNativeModule<AnimatedTextModule>("AnimatedText");
