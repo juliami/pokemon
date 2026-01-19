@@ -44,6 +44,17 @@
             "backgroundColor": "#000000"
           }
         }
+      ],
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "minSdkVersion": 34
+          },
+          "ios": {
+            "deploymentTarget": "17.6"
+          }
+        }
       ]
     ],
     "experiments": {
