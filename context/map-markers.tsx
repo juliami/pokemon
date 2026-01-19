@@ -46,8 +46,10 @@ export const MapMarkersProvider: React.FC<{ children: React.ReactNode }> = ({
     setMarkers((prev) => [...prev, marker]);
   };
 
-  const removeMarker = (index: number) => {
-    setMarkers((prev) => prev.filter((_, i) => i !== index));
+  const removeMarker = (pokemonId: number) => {
+    setMarkers((prev) =>
+      prev.filter((marker) => marker.pokemonId !== pokemonId),
+    );
   };
 
   return (
