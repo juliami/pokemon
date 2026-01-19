@@ -1,24 +1,12 @@
 import ExpoModulesCore
 import SwiftUI
 
-struct AnimatedTextViewContent: View {
-    var body: some View {
-        Text("Hello from AnimatedText!")
-            .font(.largeTitle)
-            .bold()
-            .foregroundColor(.purple)
-            .padding()
-    }
-}
-
-class AnimatedTextView: ExpoView {
-    // Lazy so it can reference self safely
+class AnimatedTextViewContainer: ExpoView {
     private lazy var hostingController = UIHostingController(rootView: AnimatedTextViewContent())
 
     required init(appContext: AppContext? = nil) {
-        super.init(appContext: appContext)  // ✅ safe
+        super.init(appContext: appContext)
 
-        // Add SwiftUI view
         let view = hostingController.view!
         view.backgroundColor = .clear
         addSubview(view)

@@ -1,11 +1,12 @@
-import { SimpleView } from "@/components/simple-view";
-import AnimatedText from "@/modules/animated-text";
-import { Text } from "react-native";
+import { requireNativeViewManager } from "expo-modules-core";
+import { StyleSheet, View } from "react-native";
 
-const Stats = () => (
-  <SimpleView>
-    <Text>{AnimatedText.hello()}</Text>
-  </SimpleView>
-);
+const AnimatedTextNativeView = requireNativeViewManager("AnimatedText");
 
-export default Stats;
+export default function App() {
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <AnimatedTextNativeView style={{ ...StyleSheet.absoluteFillObject }} />
+    </View>
+  );
+}
