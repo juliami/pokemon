@@ -32,6 +32,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="stats"
+        options={{
+          title: "Pokemon Stats",
+          tabBarIcon: ({ color }) => (
+            <IconSymbol size={28} name="heart" color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
