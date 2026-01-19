@@ -1,3 +1,4 @@
+import { useSystemTheme } from "@/modules/system-theme";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { createContext, useEffect, useState } from "react";
 
@@ -31,6 +32,9 @@ export const FavoritePokemonProvider: React.FC<{
       }
     });
   }, []);
+
+const systemTheme = useSystemTheme();
+console.log("systemTheme", systemTheme);
 
   useEffect(() => {
     if (favoritePokemonId) {
