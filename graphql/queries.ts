@@ -9,14 +9,6 @@ export const GET_ALL_POKEMONS = gql`
     ) {
       name
       id
-      pokemon_v2_pokemoncolor {
-        name
-      }
-      pokemon_v2_pokemons {
-        pokemon_v2_pokemonsprites {
-          sprites
-        }
-      }
     }
   }
 `;
