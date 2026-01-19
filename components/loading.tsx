@@ -1,12 +1,10 @@
-import { Gaps } from "@/constants/layout";
-import { Colors } from "@/constants/theme";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
+
 import { StyledText } from "./styled-text";
 
-const Loading = ({ text }: { text: string }) => (
+const Loading = () => (
   <View style={styles.container}>
-    <ActivityIndicator size="large" color={Colors.tint} />
-    <StyledText style={styles.text}>{text}</StyledText>
+    <StyledText>Loading...</StyledText>
   </View>
 );
 
@@ -16,10 +14,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
-  },
-  text: {
-    marginTop: Gaps.small,
-    color: Colors.icon,
   },
 });
 

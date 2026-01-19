@@ -57847,17 +57847,6 @@ export type GetAllPokemonSpeciesQuery = {
     __typename?: "pokemon_v2_pokemonspecies";
     name: string;
     id: number;
-    pokemon_v2_pokemoncolor?: {
-      __typename?: "pokemon_v2_pokemoncolor";
-      name: string;
-    } | null;
-    pokemon_v2_pokemons: Array<{
-      __typename?: "pokemon_v2_pokemon";
-      pokemon_v2_pokemonsprites: Array<{
-        __typename?: "pokemon_v2_pokemonsprites";
-        sprites: any;
-      }>;
-    }>;
   }>;
 };
 
@@ -57977,41 +57966,6 @@ export const GetAllPokemonSpeciesDocument = {
               selections: [
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "id" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "pokemon_v2_pokemoncolor" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "name" } },
-                    ],
-                  },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "pokemon_v2_pokemons" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: {
-                          kind: "Name",
-                          value: "pokemon_v2_pokemonsprites",
-                        },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "sprites" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
               ],
             },
           },
