@@ -4,12 +4,14 @@ import SwiftUI
 struct AnimatedTextViewContent: View {
   @State var value: Double = 0
 
+
   private let numberFormatter: NumberFormatter = {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
     formatter.maximumFractionDigits = 0  // whole numbers
     return formatter
   }()
+
 
   var body: some View {
     VStack {
@@ -40,7 +42,7 @@ struct AnimatedTextViewContent: View {
 class AnimatedTextView: ExpoView {
   // Lazy so it can reference self safely
   private lazy var hostingController = UIHostingController(rootView: AnimatedTextViewContent())
-
+ weak var module: AnimatedTextModule?
   required init(appContext: AppContext? = nil) {
     super.init(appContext: appContext)
 
@@ -53,5 +55,17 @@ class AnimatedTextView: ExpoView {
   override func layoutSubviews() {
     super.layoutSubviews()
     hostingController.view.frame = bounds
+  }
+
+
+
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+    module?.notifyThemeChange()
+
+    guard traitCollection.hasDifferentColorAppearance(
+      comparedTo: previousTraitCollection
+    ) else { return }
+
   }
 }

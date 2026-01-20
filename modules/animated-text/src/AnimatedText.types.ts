@@ -4,8 +4,13 @@ export type OnLoadEventPayload = {
   url: string;
 };
 
+export type ThemeChangeEvent = {
+  theme: string;
+};
+
 export type AnimatedTextModuleEvents = {
   onChange: (params: ChangeEventPayload) => void;
+  onChangeTheme: (params: ThemeChangeEvent) => void;
 };
 
 export type ChangeEventPayload = {
