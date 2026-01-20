@@ -3,7 +3,6 @@
     "name": "pokemon",
     "slug": "pokemon",
     "version": "1.0.0",
-    "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "pokemon",
     "userInterfaceStyle": "automatic",

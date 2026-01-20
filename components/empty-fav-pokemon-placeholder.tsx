@@ -1,11 +1,15 @@
 import { Image } from "expo-image";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View, useWindowDimensions } from "react-native";
 
 import { StyledText } from "@/components/styled-text";
 
 export default function EmptyFavoritePokemonPlaceholder() {
+  const { height, width } = useWindowDimensions();
+  const rnOrientation = height > width ? "portrait" : "landscape";
+
   return (
     <View style={styles.container}>
+      <Text>React Native: {rnOrientation}</Text>
       <Image
         source={require("@/assets/images/sad-pokemon.webp")}
         style={styles.image}
