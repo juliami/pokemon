@@ -57,10 +57,10 @@
         {
           "android": {
             "minSdkVersion": 34
+          },
+          "ios": {
+            "deploymentTarget": "17.6"
           }
-          // "ios": {
-          //   "deploymentTarget": "26.0"
-          // }
         }
       ]
     ],
