@@ -26,6 +26,7 @@ const MAPPING = {
   "list.bullet": "list",
   camera: "camera",
   xmark: "close",
+  map: "map",
 } as IconMapping;
 
 /**
