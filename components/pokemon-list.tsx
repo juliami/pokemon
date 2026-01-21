@@ -1,12 +1,15 @@
+import { PokemonColorKey } from "@/constants/theme";
 import { useGetPokemonsQuery } from "@/hooks/use-get-pokemons-query";
 import { useCallback, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList } from "react-native";
+import Loading from "./loading";
 import PokemonListItem from "./pokemon-list-item";
 import { StyledText } from "./styled-text";
+import ListItemActivityIndicator from "./ui/list-item-activity-indicator";
 
 const PokemonList = () => {
   const [refreshing, setRefreshing] = useState(false);
-  const { data, error, fetchMore, refetch } = useGetPokemonsQuery();
+  const { data, error, fetchMore, refetch, loading } = useGetPokemonsQuery();
 
   const fetchNextPage = useCallback(() => {
     if (!data?.pokemon_v2_pokemonspecies) return;
@@ -38,36 +41,41 @@ const PokemonList = () => {
   const pokemons = data?.pokemon_v2_pokemonspecies;
 
   if (error) return <StyledText>Error: {error.message}</StyledText>;
-  if (!pokemons) return <StyledText>No pokemons found</StyledText>;
+  if (!pokemons && loading) return <Loading text="Catching them all" />;
 
   return (
-    <>
-      <FlatList
-        data={pokemons}
-        renderItem={({ item, index }) => (
-          <PokemonListItem name={item.name} id={item.id} index={index} />
-        )}
-        keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
-        onEndReached={fetchNextPage}
-        onRefresh={onRefresh}
-        refreshing={refreshing}
-        contentContainerStyle={[styles.list, refreshing && { opacity: 0.3 }]}
-      />
-    </>
+    <FlatList
+      data={pokemons}
+      renderItem={({ item }) => (
+        <PokemonListItem
+          name={item.name}
+          id={item.id}
+          color={item.pokemon_v2_pokemoncolor?.name as PokemonColorKey}
+          imageUri={
+            item.pokemon_v2_pokemons[0].pokemon_v2_pokemonsprites[0].sprites
+              .other["official-artwork"].front_default
+          }
+        />
+      )}
+      keyExtractor={(item, index) => `${String(item.id)} ${String(index)}`}
+      onEndReached={fetchNextPage}
+      onEndReachedThreshold={0.3}
+      onRefresh={onRefresh}
+      refreshing={refreshing}
+      windowSize={5}
+      initialNumToRender={20}
+      maxToRenderPerBatch={20}
+      contentContainerStyle={[refreshing && { opacity: 0.3 }]}
+      removeClippedSubviews={true}
+      testID="pokemon-list"
+      getItemLayout={(_data, index) => ({
+        length: 200,
+        offset: 200 * index,
+        index,
+      })}
+      ListFooterComponent={loading ? <ListItemActivityIndicator /> : null}
+    />
   );
 };
-
-const styles = StyleSheet.create({
-  list: {
-    padding: 32,
-  },
-  container: {
-    flex: 1,
-  },
-  scrollView: {
-    flex: 1,
-    justifyContent: "center",
-  },
-});
 
 export default PokemonList;
