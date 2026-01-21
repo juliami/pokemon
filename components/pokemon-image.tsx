@@ -1,18 +1,37 @@
 import { Image } from "expo-image";
-import { StyleSheet } from "react-native";
+import { memo } from "react";
+import { ImageStyle, StyleSheet } from "react-native";
 
-const PokemonImage = ({ imageUri }: { imageUri: string }) => (
+type Props = {
+  contentPosition: "center" | "bottom";
+  imageUri: string;
+  imageStyles?: ImageStyle;
+  shadowStyles?: ImageStyle;
+};
+
+const PokemonImage = ({
+  imageUri,
+  contentPosition,
+  imageStyles,
+  shadowStyles,
+}: Props) => (
   <>
     <Image
       source={{ uri: imageUri }}
-      style={styles.imageShadow}
-      contentPosition={"bottom"}
+      placeholder={require("@/assets/images/placeholder-pokeball.png")}
+      style={[styles.imageShadow, shadowStyles]}
+      contentPosition={contentPosition}
       tintColor={"white"}
+      contentFit={"contain"}
+      cachePolicy={"memory-disk"}
     />
     <Image
       source={{ uri: imageUri }}
-      style={styles.image}
-      contentPosition={"bottom"}
+      style={[styles.image, imageStyles]}
+      placeholder={require("@/assets/images/placeholder-pokeball.png")}
+      contentPosition={contentPosition}
+      contentFit={"contain"}
+      cachePolicy={"memory-disk"}
     />
   </>
 );
@@ -20,7 +39,6 @@ const PokemonImage = ({ imageUri }: { imageUri: string }) => (
 const styles = StyleSheet.create({
   imageShadow: {
     ...StyleSheet.absoluteFillObject,
-    resizeMode: "contain",
     flexGrow: 1,
     position: "absolute",
     opacity: 0.15,
@@ -29,11 +47,10 @@ const styles = StyleSheet.create({
   image: {
     ...StyleSheet.absoluteFillObject,
     paddingInline: 10,
-    resizeMode: "contain",
     flexGrow: 1,
     zIndex: 5,
     transform: [{ translateY: 60 }],
   },
 });
 
-export default PokemonImage;
+export default memo(PokemonImage);
