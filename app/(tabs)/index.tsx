@@ -1,5 +1,6 @@
 import EmptyFavoritePokemonPlaceholder from "@/components/empty-fav-pokemon-placeholder";
 import Pokemon from "@/components/pokemon";
+
 import { SimpleView } from "@/components/simple-view";
 import { FavoritePokemonContext } from "@/context/favorite-pokemon";
 import React, { useContext } from "react";
