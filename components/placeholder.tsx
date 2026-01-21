@@ -3,17 +3,31 @@ import { StyleSheet, View } from "react-native";
 
 import { StyledText } from "@/components/styled-text";
 
-export default function EmptyFavoritePokemonPlaceholder() {
+interface Props {
+  text: string;
+  image?: string;
+  children?: React.ReactNode;
+}
+export default function EmptyFavoritePokemonPlaceholder({
+  text,
+  image,
+  children,
+}: Props) {
+  const showCameraImage = image === "camera";
   return (
     <View style={styles.container}>
       <Image
-        source={require("@/assets/images/sad-pokemon.webp")}
+        source={
+          showCameraImage
+            ? require("@/assets/images/pokemon-camera.webp")
+            : require("@/assets/images/sad-pokemon.webp")
+        }
         style={styles.image}
       />
-      <StyledText style={{ textAlign: "center" }}>
-        You have not picked a favorite Pokémon yet.{"\n"}Browse the list and
-        select your favorite!
+      <StyledText style={{ textAlign: "center", width: "100%", height: 80 }}>
+        {text}
       </StyledText>
+      {children}
     </View>
   );
 }
