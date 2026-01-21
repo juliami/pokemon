@@ -2,12 +2,8 @@ import { Image } from "expo-image";
 import { StyleSheet, View } from "react-native";
 
 import { StyledText } from "@/components/styled-text";
-import { useOrientation } from "@/hooks/use-orientation";
 
 export default function EmptyFavoritePokemonPlaceholder() {
-  const orientation = useOrientation();
-  console.log(orientation);
-
   return (
     <View style={styles.container}>
       <Image
