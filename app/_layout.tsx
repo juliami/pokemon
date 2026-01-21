@@ -7,6 +7,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import client from "@/api/client";
 import { FavoritePokemonProvider } from "@/context/favorite-pokemon";
 import { MapMarkersProvider } from "@/context/map-markers";
+import { useTurboTheme } from "@/hooks/use-turbo-theme";
 import { ApolloProvider } from "@apollo/client/react";
 
 export const unstable_settings = {
@@ -14,6 +15,9 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
+  const turboTheme = useTurboTheme();
+  console.log("systemTheme", turboTheme);
+
   return (
     <ApolloProvider client={client}>
       <FavoritePokemonProvider>
