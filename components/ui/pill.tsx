@@ -1,7 +1,8 @@
 import React, { ReactNode } from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet } from "react-native";
 
 import { Gaps, Radius } from "@/constants/layout";
+import { StyledText } from "../styled-text";
 
 interface Props {
   backgroundColor: string;
@@ -9,12 +10,12 @@ interface Props {
 }
 
 const Pill: React.FC<Props> = (props: Props) => (
-  <Text
+  <StyledText
     style={[styles.pill, { backgroundColor: props.backgroundColor }]}
     {...props}
   >
     {props.children}
-  </Text>
+  </StyledText>
 );
 
 const styles = StyleSheet.create({
@@ -24,11 +25,13 @@ const styles = StyleSheet.create({
     color: "white",
     gap: Gaps.small,
     paddingInline: Gaps.small,
-    fontSize: 12,
+    fontSize: 14,
     height: 24,
     lineHeight: 24,
     letterSpacing: 0.1,
     fontWeight: 600,
+    alignSelf: "stretch",
+    textAlign: "center",
   },
 });
 
