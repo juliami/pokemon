@@ -1,4 +1,4 @@
-import { registerWebModule, NativeModule } from "expo";
+import { NativeModule, registerWebModule } from "expo";
 
 import { ChangeEventPayload } from "./Orientation.types";
 
@@ -7,12 +7,8 @@ type OrientationModuleEvents = {
 };
 
 class OrientationModule extends NativeModule<OrientationModuleEvents> {
-  PI = Math.PI;
-  async setValueAsync(value: string): Promise<void> {
-    this.emit("onChange", { value });
-  }
-  hello() {
-    return "Hello world! 👋";
+  getOrientation() {
+    return "unknown"; // Web implementation returns unknown
   }
 }
 

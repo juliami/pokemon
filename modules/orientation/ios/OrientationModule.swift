@@ -6,15 +6,7 @@ public class OrientationModule: Module {
   public func definition() -> ModuleDefinition {
     Name("Orientation")
 
-    Constant("PI") {
-      Double.pi
-    }
-
     Events("onChange")
-
-    Function("hello") {
-      return "Hello world! 👋"
-    }
 
     Function("getOrientation") {
       let orientation = UIDevice.current.orientation
@@ -26,10 +18,6 @@ public class OrientationModule: Module {
       default:
         return "unknown"
       }
-    }
-
-    AsyncFunction("setValueAsync") { (value: String) in
-      self.sendEvent("onChange", ["value": value])
     }
     
     OnStartObserving {
