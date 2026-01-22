@@ -1,6 +1,6 @@
-# Welcome to your Expo app 👋
+# Pokemon 👋
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A playful Pokémon explorer built with Expo + React Native, where you can browse and favorite Pokémon, peek at their stats, and discover them on an interactive map. Under the hood it talks to the PokéAPI over GraphQL, experiments with React Native’s New Architecture (TurboModules), and sprinkles in camera and haptics for a more “living Pokédex” feel.
 
 ## Get started
 
