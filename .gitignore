@@ -18,6 +18,11 @@ expo-env.d.ts
 *.key
 *.mobileprovision
 
+# Android bug reports and dumps
+bugreport-*.zip
+dumpstate-*.log
+dumpsys-*.txt
+
 # Metro
 .metro-health-check*
 

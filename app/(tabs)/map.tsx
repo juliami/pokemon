@@ -47,7 +47,6 @@ const MapScreen = () => {
   };
 
   const handleRemoveMarker = () => {
-    console.log("remo");
     if (!selectedPokemonId) return;
 
     removeMarker(selectedPokemonId);
