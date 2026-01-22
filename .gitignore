@@ -47,4 +47,15 @@ app-example
 /ios
 /android
 
+# Custom native module build artifacts
+modules/*/android/build/
+modules/*/ios/build/
+modules/*/*/build/
+
+# Kotlin compilation cache
+*.tab
+*.len
+*.at
+*.bin
+
 *.swp
