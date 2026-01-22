@@ -1,17 +1,32 @@
-import TurboTheme from "@/specs/TurboTheme";
+import TurboTheme from "@/specs/NativeTurboTheme";
 import { useEffect, useState } from "react";
+import { NativeEventEmitter } from "react-native";
 
-export const useTurboTheme = () => {
+export function useTurboTheme() {
   const [theme, setTheme] = useState<string | null>(null);
 
   useEffect(() => {
-    TurboTheme.getDeviceName()
-      .then((name: string) => {
-        console.log("name", name);
-        setTheme(name);
+    // Get initial theme
+    TurboTheme.getCurrentTheme()
+      .then((initialTheme) => {
+        setTheme(initialTheme);
       })
-      .catch((err: Error) => console.error("TurboTheme error", err));
+      .catch((err) =>
+        console.error("❌ useTurboTheme: Failed to get initial theme:", err),
+      );
+
+    const eventEmitter = new NativeEventEmitter(TurboTheme);
+    const subscription = eventEmitter.addListener(
+      "onThemeChanged",
+      (newTheme: string) => {
+        setTheme(newTheme);
+      },
+    );
+
+    return () => {
+      subscription.remove();
+    };
   }, []);
 
   return theme;
-};
+}

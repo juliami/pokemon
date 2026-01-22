@@ -55,6 +55,7 @@
     "@graphql-codegen/typescript": "^5.0.7",
     "@graphql-codegen/typescript-operations": "^5.0.7",
     "@graphql-codegen/typescript-react-apollo": "^4.4.0",
+    "@react-native/codegen": "^0.83.1",
     "@types/react": "~19.1.0",
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
@@ -64,11 +65,11 @@
     "typescript": "~5.9.2"
   },
   "codegenConfig": {
-    "name": "TurboTheme",
+    "name": "NativeTurboThemeSpec",
     "type": "modules",
     "jsSrcsDir": "specs",
     "android": {
-      "javaPackageName": "com.juliamio.pokemon"
+      "javaPackageName": "com.nativeturbotheme"
     }
   },
   "private": true
