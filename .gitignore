@@ -48,3 +48,14 @@ app-example
 /android
 
 *.swp
+
+# Custom native module build artifacts
+modules/*/android/build/          # ✅ Covers your file path
+modules/*/ios/build/
+modules/*/*/build/
+
+# Kotlin compilation cache  
+*.tab
+*.len
+*.at
+*.bin
