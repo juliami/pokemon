@@ -28,7 +28,7 @@ export default function Pokemon({
   const closeView = () => navigation.goBack();
 
   if (loading) {
-    return <Loading />;
+    return <Loading text="Loading pokemon..." />;
   }
   if (!pokemon) {
     closeView();
@@ -72,7 +72,7 @@ export default function Pokemon({
             backgroundColor={PokemonColors[color].darker}
           />
         </View>
-        <PokemonImage imageUri={imageUri} />
+        <PokemonImage imageUri={imageUri} contentPosition="center" />
         <View style={styles.bottomIconContainer}>
           <ToggleFavButton id={id.toString()} />
         </View>
