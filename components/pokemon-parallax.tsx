@@ -1,17 +1,20 @@
 import { StyleSheet, View } from "react-native";
 
-import PokemonImage from "@/components/pokemon-image";
+import PokemonData from "@/components/pokemon-data";
+import PokemonParallaxImage from "@/components/pokemon-parallax-image";
 import PokemonTypePills from "@/components/pokemon-type-pills";
 import { Gaps } from "@/constants/layout";
 import { PokemonColors } from "@/constants/theme";
 import { useGetPokemonByIdQuery } from "@/hooks/use-get-pokemon-by-id";
+import { useParallaxStyle } from "@/hooks/use-parallax";
 import { useNavigation } from "expo-router";
+import Animated from "react-native-reanimated";
 import ToggleFavButton from "./fav-button";
 import Loading from "./loading";
 import PokemonTitle from "./pokemon-title";
 import CloseButton from "./ui/close-button";
 
-export default function Pokemon({
+export default function PokemonParallax({
   id,
   showCloseButton,
   showPokemonData = true,
@@ -23,6 +26,7 @@ export default function Pokemon({
   const { data: pokemon, loading } = useGetPokemonByIdQuery(Number(id));
   const navigation = useNavigation();
 
+  const foregroundStyle = useParallaxStyle();
   const closeView = () => navigation.goBack();
 
   if (loading) {
@@ -39,17 +43,20 @@ export default function Pokemon({
   return (
     <View style={[styles.container, { backgroundColor }]}>
       <View style={[styles.row, styles.header]}>
-        <View style={[styles.titleContainer]}>
+        <Animated.View style={[styles.titleContainer, foregroundStyle]}>
           <PokemonTitle name={name} color={color} />
           {showCloseButton && <CloseButton onPress={closeView} />}
-        </View>
-        <View style={styles.pillsContainer}>
+        </Animated.View>
+        <Animated.View style={[styles.pillsContainer, foregroundStyle]}>
           <PokemonTypePills types={types} color={color} />
-        </View>
-        <PokemonImage imageUri={imageUri} contentPosition="center" />
+        </Animated.View>
+        <PokemonParallaxImage imageUri={imageUri} />
+        <Animated.View style={[styles.bottomIconContainer, foregroundStyle]}>
+          <ToggleFavButton id={id.toString()} />
+        </Animated.View>
       </View>
-      <View style={styles.bottomIconContainer}>
-        <ToggleFavButton id={id.toString()} />
+      <View style={styles.row}>
+        {showPokemonData && <PokemonData pokemon={pokemon} />}
       </View>
     </View>
   );

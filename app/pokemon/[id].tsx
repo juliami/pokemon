@@ -1,14 +1,14 @@
 import { useLocalSearchParams } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import Pokemon from "@/components/pokemon";
+import PokemonParallax from "@/components/pokemon-parallax";
 
 const PokemonDetailsScreen = () => {
   const { id } = useLocalSearchParams();
 
   return (
     <SafeAreaView style={{ flex: 1 }} edges={["top"]}>
-      <Pokemon id={id.toString()} showCloseButton={true} />
+      <PokemonParallax id={id.toString()} showCloseButton={true} />
     </SafeAreaView>
   );
 };

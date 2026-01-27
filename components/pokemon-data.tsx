@@ -8,19 +8,13 @@ import { hexToRGBA } from "@/utils/color";
 import { StyledText } from "./styled-text";
 import Surface from "./ui/surface";
 
-type Props = Pick<
-  DetailedPokemonSpecies,
-  "genus" | "flavorText" | "abilities" | "height" | "weight" | "color"
->;
+type Props = {
+  pokemon: DetailedPokemonSpecies;
+};
 
-const PokemonData = ({
-  genus,
-  flavorText,
-  abilities,
-  height,
-  weight,
-  color,
-}: Props) => {
+const PokemonData = ({ pokemon }: Props) => {
+  const { weight, height, genus, color, flavorText, abilities } = pokemon;
+
   const flavorTextCleaned = flavorText.replace(/\n|\f/g, " ");
   const lightBackgroundColor = hexToRGBA(PokemonColors[color].default, 0.1);
 
