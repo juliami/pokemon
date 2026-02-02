@@ -1,5 +1,5 @@
 import Placeholder from "@/components/placeholder";
-import Pokemon from "@/components/pokemon";
+import PokemonParallax from "@/components/pokemon-parallax";
 
 import { useFavoritePokemonContext } from "@/hooks/use-favorite-pokemon-context";
 
@@ -16,7 +16,7 @@ const FavoriteScreen = () => {
     );
   }
 
-  return <Pokemon id={favoritePokemonId} showCloseButton={false} />;
+  return <PokemonParallax id={favoritePokemonId} showCloseButton={false} />;
 };
 
 export default FavoriteScreen;
