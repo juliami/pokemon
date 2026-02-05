@@ -43,3 +43,8 @@ app-example
 /android
 
 *.swp
+
+# build artifacts
+build/
+.gradle/
+.transforms/

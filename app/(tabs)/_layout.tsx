@@ -4,8 +4,11 @@ import React from "react";
 import { HapticTab } from "@/components/haptic-tab";
 import { IconSymbol } from "@/components/ui/icon-symbol";
 import { Colors } from "@/constants/theme";
+import { useOrientation } from "@/hooks/use-orientation";
 
 export default function TabLayout() {
+  const orientation = useOrientation();
+  console.log(orientation);
   return (
     <Tabs
       screenOptions={{
