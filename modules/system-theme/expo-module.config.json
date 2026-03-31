@@ -1,0 +1,9 @@
+{
+  "platforms": ["apple", "android", "web"],
+  "apple": {
+    "modules": ["SystemThemeModule"]
+  },
+  "android": {
+    "modules": ["expo.modules.systemtheme.SystemThemeModule"]
+  }
+}
